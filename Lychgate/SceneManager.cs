@@ -8,23 +8,23 @@ namespace Sigon.Lychgate.Graphics
 {
     public class SceneManager
     {
+        public VideoDriver VideoDriver
+        {
+            get { return videoDriver; }
+            set { videoDriver = value; }
+        }
+        private VideoDriver videoDriver;
+
         public SceneManager(DriverType type)
         {
             switch(type) {
-                case DriverType.DRV_OPENGL:
+                case DriverType.OpenGL:
                 // VideoDrv = new OpenGLVideoDriver();
                     break;
-                case DriverType.DRV_DIRECTX:
+                case DriverType.DirectX:
                 // VideoDrv = new DirectXVideoDriver();
                     break;
             }
         }
-
-
-        public VideoDriver VideoDrv {
-            get { return _videoDriver; }
-            set { _videoDriver = value; }
-        }
-        private VideoDriver _videoDriver;
     }
 }

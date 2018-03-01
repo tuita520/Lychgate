@@ -8,16 +8,15 @@ namespace Sigon.Lychgate
 {
     public class GameEngine
     {
+        public Graphics.SceneManager SceneManager
+        {
+            get { return sceneManager; }
+        }
+        private readonly Graphics.SceneManager sceneManager;
+
         public GameEngine(Graphics.DriverType dt)
         {
-            _sceneManager = new Graphics.SceneManager(dt);
-        }
-
-        public Graphics.SceneManager SceneMgr
-        {
-            get { return _sceneManager; }
-        }
-        private readonly Graphics.SceneManager _sceneManager;
-        
+            sceneManager = new Graphics.SceneManager(dt);
+        }        
     }
 }

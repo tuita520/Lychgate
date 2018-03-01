@@ -14,7 +14,7 @@ namespace Sigon.Lychgate.Graphics
     }
 
     public enum DriverType {
-        DRV_OPENGL,
-        DRV_DIRECTX
+        OpenGL,
+        DirectX
     }
 }
