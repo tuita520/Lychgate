@@ -8,7 +8,9 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lychgate", "Lychgate\Lychgate.csproj", "{CF8A523D-2CFA-496F-BFFB-BAD5AC2CE026}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Math", "Math\Math.csproj", "{34FF8D52-333E-49FD-A88C-F5F7E1ED3745}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Lychgate", "Lychgate\Lychgate.csproj", "{3E81AFDC-3BC0-437C-B102-BC65508F8227}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -16,10 +18,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{CF8A523D-2CFA-496F-BFFB-BAD5AC2CE026}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{CF8A523D-2CFA-496F-BFFB-BAD5AC2CE026}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{CF8A523D-2CFA-496F-BFFB-BAD5AC2CE026}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{CF8A523D-2CFA-496F-BFFB-BAD5AC2CE026}.Release|Any CPU.Build.0 = Release|Any CPU
+		{34FF8D52-333E-49FD-A88C-F5F7E1ED3745}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{34FF8D52-333E-49FD-A88C-F5F7E1ED3745}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{34FF8D52-333E-49FD-A88C-F5F7E1ED3745}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{34FF8D52-333E-49FD-A88C-F5F7E1ED3745}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3E81AFDC-3BC0-437C-B102-BC65508F8227}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3E81AFDC-3BC0-437C-B102-BC65508F8227}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3E81AFDC-3BC0-437C-B102-BC65508F8227}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3E81AFDC-3BC0-437C-B102-BC65508F8227}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
