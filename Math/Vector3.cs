@@ -30,7 +30,7 @@ namespace Sigon.Math
 
         public Vector3()
         {
-            X = Y = Z = 0.0d;        
+            X = Y = Z = 0.0d;
         }
 
         public Vector3(double x, double y, double z)
@@ -38,24 +38,24 @@ namespace Sigon.Math
             X = x; Y = y; Z = z;
         }
 
-        public static Vector3 operator+(Vector3 vector1, Vector3 vector2)
+        public static Vector3 operator +(Vector3 vector1, Vector3 vector2)
         {
             return new Vector3(vector1.X + vector2.X, vector1.Y + vector2.Y, vector1.Z + vector2.Z);
         }
 
-        public static Vector3 operator-(Vector3 vector1,Vector3 vector2)
+        public static Vector3 operator -(Vector3 vector1, Vector3 vector2)
         {
             return new Vector3(vector1.X - vector2.X, vector1.Y - vector2.Y, vector1.Z - vector2.Z);
         }
 
         // Multiplication with factor
-        public static Vector3 operator*(Vector3 vector, double factor)
+        public static Vector3 operator *(Vector3 vector, double factor)
         {
             return new Vector3(vector.X * factor, vector.Y * factor, vector.Z * factor);
         }
 
         // dot-product
-        public static double operator*(Vector3 vector1, Vector3 vector2)
+        public static double operator *(Vector3 vector1, Vector3 vector2)
         {
             return vector1.X * vector2.X + vector1.Y * vector2.Y + vector1.Z * vector2.Z;
         }
@@ -67,11 +67,11 @@ namespace Sigon.Math
             return new Vector3(vector1.Y * vector2.Z - vector1.Z * vector2.Y, vector1.Z * vector2.X - vector1.X * vector2.Z, vector1.X * vector2.Y - vector1.Y * vector2.X);
         }
 
-        public static Vector3 operator/(Vector3 vector, double divisor)
+        public static Vector3 operator /(Vector3 vector, double divisor)
         {
             return new Vector3(vector.X / divisor, vector.Y / divisor, vector.Z / divisor);
         }
-    
+
         public double Length()
         {
             return System.Math.Sqrt(X * X + Y * Y + Z * Z);
@@ -116,10 +116,43 @@ namespace Sigon.Math
 
             double sin = System.Math.Sin(angle);
             double cos = System.Math.Cos(angle);
-        
+
             tmp = Y * cos + Z * (-sin);
             Z = Y * sin + Z * cos;
             Y = tmp;
+        }
+
+        // Rotate the Vector around the Y-Axis.
+        //  Matrix: | cos  0  sin |
+        //          |  0   1   0  |
+        //          | -sin 0  cos |
+        public void RotateY(double angle)
+        {
+            double tmp;
+
+            double sin = System.Math.Sin(angle);
+            double cos = System.Math.Cos(angle);
+
+            tmp = X * cos + Z * sin;
+            Z = X * (-sin) + Z * cos;
+            X = tmp;
+        }
+
+        // Rotate the Vector around the Z-Axis.
+        //  Matrix: | cos -sin 0  |
+        //          | sin cos  0  |
+        //          |  0   0   1  |
+        public void RotateZ(double angle)
+        {
+            double tmp;
+
+            double sin = System.Math.Sin(angle);
+            double cos = System.Math.Cos(angle);
+
+            tmp = X * cos + Y * (-sin);
+            Y = X * sin + Y * cos;
+            X = tmp;
+
         }
     }
 }
