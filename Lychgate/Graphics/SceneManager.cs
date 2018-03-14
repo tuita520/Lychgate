@@ -2,11 +2,9 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
-using System;
-
 namespace Sigon.Lychgate.Graphics
 {
-    public class SceneManager
+    public class SceneManager : Manager
     {
         public VideoDriver VideoDriver
         {
@@ -15,16 +13,10 @@ namespace Sigon.Lychgate.Graphics
         }
         private VideoDriver videoDriver;
 
-        public SceneManager(DriverType type)
+        public override void Update()
         {
-            switch(type) {
-                case DriverType.OpenGL:
-                // VideoDrv = new OpenGLVideoDriver();
-                    break;
-                case DriverType.DirectX:
-                // VideoDrv = new DirectXVideoDriver();
-                    break;
-            }
+            // Update the world and pass everything to the VideoDriver
+            VideoDriver.Draw();
         }
     }
 }

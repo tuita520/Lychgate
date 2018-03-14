@@ -6,11 +6,9 @@ namespace Sigon.Lychgate.Graphics
 {
     public abstract class VideoDriver
     {
-        public VideoDriver()
-        {
-        }
-
-        public abstract void Draw2D();
+        public abstract void ClearScreen();
+        public abstract void Draw();
+        public abstract void CreateWindow();
     }
 
     public enum DriverType {

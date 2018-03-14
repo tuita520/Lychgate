@@ -4,15 +4,23 @@
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <AssemblyName>Sigon.Lychgate</AssemblyName>
     <RootNamespace>Sigon.Lychgate</RootNamespace>
-    <Authors>sigonsoft</Authors>
+    <Authors>Sigon Software Foundation</Authors>
     <Product>Lychgate</Product>
-    <Copyright>Copyright © 2018</Copyright>
+    <Copyright>Copyright © 2018 Sigon Software Foundation</Copyright>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Version>0.1.0-alpha-pre1</Version>
+    <Company>Sigon Software Foundation</Company>
+    <Description>The Lychgate MMORPG Game Engine</Description>
+    <PackageProjectUrl>http://github.com/sigonsoft/Lychgate</PackageProjectUrl>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
     <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
     <WarningsAsErrors />
   </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="OpenTK.NETCore" Version="1.1.2749.6433" />
+  </ItemGroup>
 
 </Project>
