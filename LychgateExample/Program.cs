@@ -3,15 +3,13 @@ using Sigon.Lychgate;
 
 namespace Sigon.LychgateExample
 {
-    class PRogram
+    class Program
     {
         static void Main(string[] args)
         {
-            Console.WriteLine("Lychgate 3D-Engine Test Application");
+            var engine = new Engine();
 
-            GameEngine engine = new GameEngine();
-
-            engine.InitGraphics(Lychgate.Graphics.DriverType.OpenGL, 800, 600);
+            engine.InitGraphics(Lychgate.Graphics.DriverType.OpenGL, 800, 600, false, "Lychgate 3D Test");
             engine.Loop();
         }
     }

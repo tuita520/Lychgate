@@ -3,46 +3,65 @@
 // See AUTHORS and LICENSE for more Information
 
 using System;
+using System.Diagnostics;
 using Sigon.Lychgate.Graphics;
 
 namespace Sigon.Lychgate
 {
-    public class GameEngine
+    public class Engine
     {
-        private Graphics.SceneManager sceneManager;
-        private Graphics.VideoDriver videoDriver;
+        private const int VER_MAJOR = 0;
+        private const int VER_MINOR = 1;
+        private const int VER_PLVL = 0;
+        private const string VER_ADD = "-pre-alpha1";
+        private const int API_VER = 20180314;
+        private SceneManager sceneManager;
+        private VideoDriver videoDriver;
         private bool run;
 
-        public Graphics.SceneManager SceneManager { get => sceneManager; }
+        public SceneManager SceneManager { get => sceneManager; }
         public VideoDriver VideoDriver { get => videoDriver; set => videoDriver = value; }
         public bool Run { get => run; set => run = value; }
 
-        public void InitGraphics(Graphics.DriverType dt, int width, int height)
+        public Engine()
         {
-            sceneManager = new Graphics.SceneManager();
+            Debug.WriteLine("Starting Lychgate 3D-Engine Version: " + VER_MAJOR + "." + VER_MINOR + "." + VER_PLVL + VER_ADD + " API: " + API_VER);
+            videoDriver = null;
+            sceneManager = null;
+        }
+
+        public void InitGraphics(DriverType dt, int width, int height, bool fullscreen, string title)
+        {
+            sceneManager = new SceneManager();
             switch(dt)
             {
                 case DriverType.OpenGL:
-                    videoDriver = new OpenGLVideoDriver(width, height);
+                    Debug.WriteLine("OpenGLDriver selected...");
+                    videoDriver = new OpenGLVideoDriver();
                     break;
                 case DriverType.DirectX:
                     throw new NotImplementedException();
             }
             sceneManager.VideoDriver = videoDriver;
 
-            videoDriver.CreateWindow();
+            videoDriver.CreateWindow(width, height, fullscreen, title);
 
             Run = true;
         }
+
         public void Loop()
         {
+            Debug.WriteLine("Entering main loop...");
             // Main Loop
             //InputManager.Update();
             // If(InputManager.QuitApplication)
             //      Run = false;
             //      return;
             //SoundManager.Update();
-            SceneManager.Update();
+            while (videoDriver.WindowActive)
+            {
+                SceneManager.Update();
+            }
         }
     }
 }

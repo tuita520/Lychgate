@@ -3,58 +3,28 @@
 // See AUTHORS and LICENSE for more Information
 
 using System;
-using System.Collections;
 using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 namespace Sigon.Lychgate.Graphics
 {
     public class OpenGLVideoDriver : VideoDriver
     {
-        private float[] vertexBufferArray;
-        private GameWindow window;
+        private NativeWindow window;
+        private GraphicsContext context;
+
+        public override bool WindowActive { get => window.Exists; }
 
         public OpenGLVideoDriver()
         {
-            window = new GameWindow();
-
-            window.Load += OnLoad;
-            window.RenderFrame += OnRenderFrame;
-        }
-
-        public OpenGLVideoDriver(int width, int height)
-        {
-            window = new GameWindow(width, height);
-
-            window.Load += OnLoad;
-            window.RenderFrame += OnRenderFrame;
-            window.Resize += OnResize;
-        }
-
-        public void setVertexBufferArray(float[] array)
-        {
-            vertexBufferArray = array;
-        }
-
-        private void OnRenderFrame(object o, FrameEventArgs e)
-        {
-            // Drawing vertexBufferArray
-            // Drawing comes here...
-            ClearScreen();
-            window.SwapBuffers();
-        }
-
-        // Initialization goes here.
-        private void OnLoad(object o, EventArgs e)
-        {
-            GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-            GL.Enable(EnableCap.CullFace);
+            window = null; context = null;
         }
 
         private void OnResize(object o, EventArgs e)
         {
             GL.Viewport(window.ClientRectangle.X, window.ClientRectangle.Y, window.ClientRectangle.Width, window.ClientRectangle.Height);
-            Matrix4 projection = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4, window.Width / (float)window.Height, 1.0f, 64.0f);
+            var projection = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4, window.Width / (float)window.Height, 1.0f, 64.0f);
 
             GL.MatrixMode(MatrixMode.Projection);
 
@@ -65,14 +35,34 @@ namespace Sigon.Lychgate.Graphics
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
         }
+
         public override void Draw()
         {
-            // Implementation is handled by OnRenderFrame() for use with OpenTK.
+            ClearScreen();
+            // Drawing goes here...
+            EndFrame();
         }
 
-        public override void CreateWindow()
+        public override void CreateWindow(int width, int height, bool fullscreen, string title)
         {
-            window.Run();
+            window = new NativeWindow(width, height, title, fullscreen ? GameWindowFlags.Fullscreen : GameWindowFlags.FixedWindow, GraphicsMode.Default, DisplayDevice.Default);
+            context = new GraphicsContext(GraphicsMode.Default, window.WindowInfo, 4, 4, GraphicsContextFlags.Default);
+            context.MakeCurrent(window.WindowInfo);
+            (context as IGraphicsContextInternal).LoadAll();
+            window.Visible = true;
+            window.Resize += OnResize;
+
+            GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
+            GL.Enable(EnableCap.CullFace);
+        }
+
+        public void EndFrame()
+        {
+            window.ProcessEvents();
+            if(window.Exists)
+                context.SwapBuffers();
+
         }
     }
 }
+
