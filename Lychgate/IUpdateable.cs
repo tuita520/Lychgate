@@ -4,8 +4,8 @@
 
 namespace Sigon.Lychgate
 {
-    public abstract class Manager
+    interface IUpdateable
     {
-        public abstract void Update();
+        void Update();
     }
 }

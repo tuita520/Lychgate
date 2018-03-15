@@ -17,10 +17,12 @@ namespace Sigon.Lychgate
         private const int API_VER = 20180314;
         private SceneManager sceneManager;
         private VideoDriver videoDriver;
+        private Window window;
         private bool run;
 
         public SceneManager SceneManager { get => sceneManager; }
         public VideoDriver VideoDriver { get => videoDriver; set => videoDriver = value; }
+        public Window Window { get => window; set => window = value; }
         public bool Run { get => run; set => run = value; }
 
         public Engine()
@@ -28,6 +30,7 @@ namespace Sigon.Lychgate
             Debug.WriteLine("Starting Lychgate 3D-Engine Version: " + VER_MAJOR + "." + VER_MINOR + "." + VER_PLVL + VER_ADD + " API: " + API_VER);
             videoDriver = null;
             sceneManager = null;
+            window = null;
         }
 
         public void InitGraphics(DriverType dt, int width, int height, bool fullscreen, string title)
@@ -37,30 +40,31 @@ namespace Sigon.Lychgate
             {
                 case DriverType.OpenGL:
                     Debug.WriteLine("OpenGLDriver selected...");
+                    window = new OpenTKWindow();
                     videoDriver = new OpenGLVideoDriver();
                     break;
                 case DriverType.DirectX:
                     throw new NotImplementedException();
+                case DriverType.Vulkan:
+                    throw new NotImplementedException();
             }
             sceneManager.VideoDriver = videoDriver;
-
-            videoDriver.CreateWindow(width, height, fullscreen, title);
-
-            Run = true;
+            window.CreateWindow(width, height, fullscreen, title);
         }
 
         public void Loop()
         {
             Debug.WriteLine("Entering main loop...");
-            // Main Loop
-            //InputManager.Update();
-            // If(InputManager.QuitApplication)
-            //      Run = false;
-            //      return;
-            //SoundManager.Update();
-            while (videoDriver.WindowActive)
+            
+            while (window.WindowActive)
             {
+                //InputManager.Update();
+                // If(InputManager.QuitApplication)
+                //      Run = false;
+                //      return;
+                //SoundManager.Update();
                 SceneManager.Update();
+                Window.Update();
             }
         }
     }

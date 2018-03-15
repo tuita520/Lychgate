@@ -4,7 +4,7 @@
 
 namespace Sigon.Lychgate.Graphics
 {
-    public class SceneManager : Manager
+    public class SceneManager : IUpdateable
     {
         public VideoDriver VideoDriver
         {
@@ -13,7 +13,7 @@ namespace Sigon.Lychgate.Graphics
         }
         private VideoDriver videoDriver;
 
-        public override void Update()
+        public void Update()
         {
             // Update the world and pass everything to the VideoDriver
             VideoDriver.Draw();

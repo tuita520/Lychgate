@@ -6,14 +6,13 @@ namespace Sigon.Lychgate.Graphics
 {
     public abstract class VideoDriver
     {
-        public abstract bool WindowActive { get; }
         public abstract void ClearScreen();
         public abstract void Draw();
-        public abstract void CreateWindow(int width, int height, bool fullscreen, string title);
     }
 
     public enum DriverType {
         OpenGL,
-        DirectX
+        DirectX,
+        Vulkan
     }
 }
