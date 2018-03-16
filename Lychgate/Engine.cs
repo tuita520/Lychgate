@@ -33,7 +33,7 @@ namespace Sigon.Lychgate
             window = null;
         }
 
-        public void InitGraphics(DriverType dt, int width, int height, bool fullscreen, string title)
+        public void InitGraphics(DriverType dt, int width, int height, bool fullscreen, string title, EventHandler<EventArgs> keypress)
         {
             sceneManager = new SceneManager();
             switch(dt)
@@ -49,7 +49,7 @@ namespace Sigon.Lychgate
                     throw new NotImplementedException();
             }
             sceneManager.VideoDriver = videoDriver;
-            window.CreateWindow(width, height, fullscreen, title);
+            window.CreateWindow(width, height, fullscreen, title, keypress);
         }
 
         public void Loop()

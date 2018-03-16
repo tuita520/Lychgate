@@ -25,7 +25,7 @@ namespace Sigon.Lychgate.Graphics
             GL.LoadMatrix(ref projection);
         }
 
-        public override void CreateWindow(int width, int height, bool fullscreen, string title)
+        public override void CreateWindow(int width, int height, bool fullscreen, string title, EventHandler<EventArgs> keypress)
         {
             window = new NativeWindow(width, height, title, fullscreen ? GameWindowFlags.Fullscreen : GameWindowFlags.FixedWindow, GraphicsMode.Default, DisplayDevice.Default);
             context = new GraphicsContext(GraphicsMode.Default, window.WindowInfo, 4, 4, GraphicsContextFlags.Default);
@@ -33,6 +33,7 @@ namespace Sigon.Lychgate.Graphics
             (context as IGraphicsContextInternal).LoadAll();
             window.Visible = true;
             window.Resize += OnResize;
+            window.KeyPress += new EventHandler<KeyPressEventArgs>(keypress);
 
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             GL.Enable(EnableCap.CullFace);
