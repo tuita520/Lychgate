@@ -1,24 +1,34 @@
 ﻿using System;
-using OpenTK;
+using System.Diagnostics;
 using Sigon.Lychgate;
 using Sigon.Lychgate.Graphics;
 
 namespace Sigon.LychgateExample
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
-            var engine = new Engine();
+            var sceneMgr = new SceneManager(BackendType.OpenTK);
+            sceneMgr.Window.CreateWindow(800, 600, false, "Lychgate 3D Engine Test-Application");
 
-            engine.InitGraphics(DriverType.OpenGL, 800, 600, false, "Lychgate 3D Test", OnKeyPress);
-            engine.Loop();
-        }
+            Debug.WriteLine("Entering main loop...");
 
-        // depending on the framework used, we have to implement another delegate.
-        public static void OnKeyPress(object o, EventArgs e)
-        {
-            Console.WriteLine("Event triggered {0}", (e as KeyPressEventArgs).KeyChar);
+            while (sceneMgr.Window.WindowActive)
+            {
+                if(sceneMgr.Window.KeyPressed == Key.A)
+                    Console.WriteLine("A-Key Pressed");
+
+                if(sceneMgr.Window.KeyPressed == Key.B)
+                    Console.WriteLine("B-Key Pressed");
+
+                if (sceneMgr.Window.KeyPressed == Key.C)
+                    Console.WriteLine("C-Key Pressed");
+
+                sceneMgr.Update();
+                sceneMgr.Renderer.Draw();
+                sceneMgr.Window.EndFrame();
+            }
         }
     }
 }

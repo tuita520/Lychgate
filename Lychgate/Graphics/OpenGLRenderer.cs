@@ -9,17 +9,19 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Sigon.Lychgate.Graphics
 {
-    public class OpenGLVideoDriver : VideoDriver
+    public class OpenGLRenderer : Renderer
     {
+        private GraphicsContext context;
+        public GraphicsContext Context { get => context; set => context = value; }
+
         public override void ClearScreen()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
-
         }
+
         public override void Draw()
         {
-            ClearScreen();
-            // Drawing goes here...
+        
         }
     }
 }

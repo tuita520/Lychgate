@@ -4,15 +4,9 @@
 
 namespace Sigon.Lychgate.Graphics
 {
-    public abstract class VideoDriver
+    public abstract class Renderer
     {
         public abstract void ClearScreen();
         public abstract void Draw();
-    }
-
-    public enum DriverType {
-        OpenGL,
-        DirectX,
-        Vulkan
     }
 }
