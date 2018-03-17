@@ -15,17 +15,27 @@ namespace Sigon.Lychgate
         private const int VER_PLVL = 0;
         private const string VER_ADD = "-pre-alpha1";
         private const int API_VER = 20180314;
-        private bool run;
 
-        public bool Run { get => run; set => run = value; }
+        private SceneManager sceneManager;
+        public SceneManager SceneManager { get => sceneManager; set => sceneManager = value; }
 
         public Engine()
         {
             Debug.WriteLine("Starting Lychgate 3D-Engine Version: " + VER_MAJOR + "." + VER_MINOR + "." + VER_PLVL + VER_ADD + " API: " + API_VER);
+            SceneManager = new SceneManager(BackendType.OpenTK);
         }
 
-        public void Init(BackendType backend)
+        public Engine(BackendType backend)
         {
+            Debug.WriteLine("Starting Lychgate 3D-Engine Version: " + VER_MAJOR + "." + VER_MINOR + "." + VER_PLVL + VER_ADD + " API: " + API_VER);
+            SceneManager = new SceneManager(backend);
+        }
+
+        public virtual void Loop()
+        {
+            SceneManager.Update();
+            SceneManager.Renderer.Draw();
+            SceneManager.Window.EndFrame();
         }
     }
 

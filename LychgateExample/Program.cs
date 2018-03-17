@@ -1,5 +1,7 @@
-﻿using System;
-using System.Diagnostics;
+﻿// Copyright (c) 2018 the SMF Team
+// This file is part of the "Sigon MMORPG Framework"
+// See AUTHORS and LICENSE for more Information
+
 using Sigon.Lychgate;
 using Sigon.Lychgate.Graphics;
 
@@ -9,25 +11,14 @@ namespace Sigon.LychgateExample
     {
         public static void Main(string[] args)
         {
-            var sceneMgr = new SceneManager(BackendType.OpenTK);
-            sceneMgr.Window.CreateWindow(800, 600, false, "Lychgate 3D Engine Test-Application");
+            GameEngine ge = new GameEngine(BackendType.OpenTK);
+            SceneManager sceneMgr = ge.SceneManager;
 
-            Debug.WriteLine("Entering main loop...");
+            sceneMgr.Window.CreateWindow(800, 600, false, "Lychgate 3D Engine - Test Application");
 
             while (sceneMgr.Window.WindowActive)
             {
-                if(sceneMgr.Window.KeyPressed == Key.A)
-                    Console.WriteLine("A-Key Pressed");
-
-                if(sceneMgr.Window.KeyPressed == Key.B)
-                    Console.WriteLine("B-Key Pressed");
-
-                if (sceneMgr.Window.KeyPressed == Key.C)
-                    Console.WriteLine("C-Key Pressed");
-
-                sceneMgr.Update();
-                sceneMgr.Renderer.Draw();
-                sceneMgr.Window.EndFrame();
+                ge.Loop();
             }
         }
     }
