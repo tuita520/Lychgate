@@ -2,11 +2,21 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
+using OpenTK.Graphics.OpenGL;
+
 namespace Sigon.Lychgate.Graphics
 {
-    public abstract class Renderer
+    public class Renderer
     {
-        public abstract void ClearScreen();
-        public abstract void Draw();
+        public void ClearScreen()
+        {
+            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
+
+        public void Draw()
+        {
+        
+        }
     }
 }
+
