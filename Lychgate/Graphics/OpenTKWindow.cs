@@ -3,23 +3,20 @@
 // See AUTHORS and LICENSE for more Information
 
 using System;
+using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 namespace Sigon.Lychgate.Graphics
 {
-    public class OpenGLVideoDriver : VideoDriver
+    public class OpenTKWindow : Window
     {
         private NativeWindow window;
         private GraphicsContext context;
-
+        private Key keyPressed;
+        public override Key KeyPressed { get => keyPressed; set => keyPressed = value; }
         public override bool WindowActive { get => window.Exists; }
-
-        public OpenGLVideoDriver()
-        {
-            window = null; context = null;
-        }
 
         private void OnResize(object o, EventArgs e)
         {
@@ -30,17 +27,24 @@ namespace Sigon.Lychgate.Graphics
 
             GL.LoadMatrix(ref projection);
         }
-        public override void ClearScreen()
-        {
-            GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
 
-        }
-
-        public override void Draw()
+        private void OnKeyPress(object o, KeyPressEventArgs e)
         {
-            ClearScreen();
-            // Drawing goes here...
-            EndFrame();
+            switch(e.KeyChar)
+            {
+                case 'a':
+                    Debug.WriteLine("switch: A pressed");
+                    KeyPressed = Key.A;
+                    break;
+                case 'b':
+                    Debug.WriteLine("switch: B pressed");
+                    KeyPressed = Key.B;
+                    break;
+                case 'c':
+                    Debug.WriteLine("switch: C pressed");
+                    KeyPressed = Key.C;
+                    break;
+            }
         }
 
         public override void CreateWindow(int width, int height, bool fullscreen, string title)
@@ -51,18 +55,18 @@ namespace Sigon.Lychgate.Graphics
             (context as IGraphicsContextInternal).LoadAll();
             window.Visible = true;
             window.Resize += OnResize;
+            window.KeyPress += OnKeyPress;
 
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
             GL.Enable(EnableCap.CullFace);
         }
 
-        public void EndFrame()
+        public override void EndFrame()
         {
             window.ProcessEvents();
-            if(window.Exists)
+            if (window.Exists)
                 context.SwapBuffers();
-
         }
+
     }
 }
-

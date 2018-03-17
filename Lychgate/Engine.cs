@@ -15,53 +15,32 @@ namespace Sigon.Lychgate
         private const int VER_PLVL = 0;
         private const string VER_ADD = "-pre-alpha1";
         private const int API_VER = 20180314;
-        private SceneManager sceneManager;
-        private VideoDriver videoDriver;
-        private bool run;
 
-        public SceneManager SceneManager { get => sceneManager; }
-        public VideoDriver VideoDriver { get => videoDriver; set => videoDriver = value; }
-        public bool Run { get => run; set => run = value; }
+        private SceneManager sceneManager;
+        public SceneManager SceneManager { get => sceneManager; set => sceneManager = value; }
 
         public Engine()
         {
             Debug.WriteLine("Starting Lychgate 3D-Engine Version: " + VER_MAJOR + "." + VER_MINOR + "." + VER_PLVL + VER_ADD + " API: " + API_VER);
-            videoDriver = null;
-            sceneManager = null;
+            SceneManager = new SceneManager(BackendType.OpenTK);
         }
 
-        public void InitGraphics(DriverType dt, int width, int height, bool fullscreen, string title)
+        public Engine(BackendType backend)
         {
-            sceneManager = new SceneManager();
-            switch(dt)
-            {
-                case DriverType.OpenGL:
-                    Debug.WriteLine("OpenGLDriver selected...");
-                    videoDriver = new OpenGLVideoDriver();
-                    break;
-                case DriverType.DirectX:
-                    throw new NotImplementedException();
-            }
-            sceneManager.VideoDriver = videoDriver;
-
-            videoDriver.CreateWindow(width, height, fullscreen, title);
-
-            Run = true;
+            Debug.WriteLine("Starting Lychgate 3D-Engine Version: " + VER_MAJOR + "." + VER_MINOR + "." + VER_PLVL + VER_ADD + " API: " + API_VER);
+            SceneManager = new SceneManager(backend);
         }
 
-        public void Loop()
+        public virtual void Loop()
         {
-            Debug.WriteLine("Entering main loop...");
-            // Main Loop
-            //InputManager.Update();
-            // If(InputManager.QuitApplication)
-            //      Run = false;
-            //      return;
-            //SoundManager.Update();
-            while (videoDriver.WindowActive)
-            {
-                SceneManager.Update();
-            }
+            SceneManager.Update();
+            SceneManager.Renderer.Draw();
+            SceneManager.Window.EndFrame();
         }
+    }
+
+    public enum BackendType
+    {
+        OpenTK
     }
 }
