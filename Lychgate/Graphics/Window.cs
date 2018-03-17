@@ -7,7 +7,7 @@ namespace Sigon.Lychgate.Graphics
     public abstract class Window
     {
         public abstract Key KeyPressed { get; set; }
-        public abstract bool WindowActive { get; }
+        public abstract bool WindowActive { get; set; }
         public abstract void CreateWindow(int width, int height, bool fullscreen, string title);
         public abstract void EndFrame();
     }

@@ -7,6 +7,7 @@ using System.Diagnostics;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using OpenTK.Input;
 
 namespace Sigon.Lychgate.Graphics
 {
@@ -14,9 +15,8 @@ namespace Sigon.Lychgate.Graphics
     {
         private NativeWindow window;
         private GraphicsContext context;
-        private Key keyPressed;
-        public override Key KeyPressed { get => keyPressed; set => keyPressed = value; }
-        public override bool WindowActive { get => window.Exists; }
+        public override Key KeyPressed { get; set; }
+        public override bool WindowActive { get => window.Exists; set { } }
 
         private void OnResize(object o, EventArgs e)
         {
@@ -30,6 +30,7 @@ namespace Sigon.Lychgate.Graphics
 
         private void OnKeyPress(object o, KeyPressEventArgs e)
         {
+           
             switch(e.KeyChar)
             {
                 case 'a':
@@ -54,6 +55,8 @@ namespace Sigon.Lychgate.Graphics
             context.MakeCurrent(window.WindowInfo);
             (context as IGraphicsContextInternal).LoadAll();
             window.Visible = true;
+
+            // Setting Event-Handlers
             window.Resize += OnResize;
             window.KeyPress += OnKeyPress;
 
