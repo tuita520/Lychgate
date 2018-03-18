@@ -2,6 +2,7 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
+using System.Runtime.CompilerServices;
 using OpenTK.Graphics.OpenGL;
 
 namespace Sigon.Lychgate.Graphics
@@ -12,8 +13,17 @@ namespace Sigon.Lychgate.Graphics
     public class Renderer
     {
         /// <summary>
+        /// 
+        /// </summary>
+        public Renderer()
+        {
+            GL.EnableClientState(ArrayCap.VertexArray);
+
+        }
+        /// <summary>
         /// Clears the OpenGL drawing screen.
         /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void ClearScreen()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
@@ -22,9 +32,9 @@ namespace Sigon.Lychgate.Graphics
         /// <summary>
         /// Draws the Buffers.
         /// </summary>
-        public void Draw()
+        public void DrawMesh(Mesh mesh)
         {
-
+            GL.DrawElements(BeginMode.Lines, mesh.VertexCount, DrawElementsType.UnsignedByte, 0);
         }
     }
 }

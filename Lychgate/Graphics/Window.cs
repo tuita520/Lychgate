@@ -3,6 +3,7 @@
 // See AUTHORS and LICENSE for more Information
 
 using System;
+using System.Runtime.CompilerServices;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
@@ -43,6 +44,7 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         /// <param name="o"></param>
         /// <param name="e"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void OnLoad(object o, EventArgs e)
         {
             GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
@@ -90,11 +92,12 @@ namespace Sigon.Lychgate.Graphics
             window.RenderFrame += OnRenderFrame;
             window.UpdateFrame += OnUpdateFrame;
         }
-        
+
         /// <summary>
         /// 
         /// </summary>
         /// <param name="fps"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public virtual void Run(int fps)
         {
             window.Run(fps);
