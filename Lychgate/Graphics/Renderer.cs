@@ -6,16 +6,25 @@ using OpenTK.Graphics.OpenGL;
 
 namespace Sigon.Lychgate.Graphics
 {
+    /// <summary>
+    /// This class represents some high-level functionality for OpenGL Rendering.
+    /// </summary>
     public class Renderer
     {
+        /// <summary>
+        /// Clears the OpenGL drawing screen.
+        /// </summary>
         public void ClearScreen()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
         }
 
+        /// <summary>
+        /// Draws the Buffers.
+        /// </summary>
         public void Draw()
         {
-        
+
         }
     }
 }

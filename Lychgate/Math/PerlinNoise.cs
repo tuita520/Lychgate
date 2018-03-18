@@ -7,23 +7,44 @@ using OpenTK;
 
 namespace Sigon.Lychgate.Math
 {
+    /// <summary>
+    /// Implements a Perlin-Noise Algorithm.
+    /// </summary>
     public class PerlinNoise
     {
         private int seed;
+        /// <summary>
+        /// 
+        /// </summary>
         public int Seed { get { return seed; } set { seed = value; } }
 
         private int depth;
+        /// <summary>
+        /// 
+        /// </summary>
         public int Depth { get { return depth; } set { depth = value; } }
 
         private double add;
+        /// <summary>
+        /// 
+        /// </summary>
         public double Add { get { return add; } set { add = value; } }
 
         private double amplitude;
+        /// <summary>
+        /// 
+        /// </summary>
         public double Amplitude { get { return amplitude; } set { amplitude = value; } }
 
         private double persistence;
+        /// <summary>
+        /// 
+        /// </summary>
         public double Persistence { get { return persistence; } set { persistence = value; } }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public PerlinNoise()
         {
             Seed = 0;
@@ -33,12 +54,20 @@ namespace Sigon.Lychgate.Math
             Amplitude = 1.0d;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="min"></param>
+        /// <param name="max"></param>
         public void SetAmplitude(double min, double max)
         {
             Add = min;
             Amplitude = max;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
         public void Create()
         {
             double range;
@@ -61,6 +90,12 @@ namespace Sigon.Lychgate.Math
             Amplitude = range / summarizedMultiplier;
         }
 
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
         public double GetValue(double x, double y)
         {
             double total = 0;

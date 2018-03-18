@@ -4,13 +4,24 @@
 
 namespace Sigon.Lychgate.Graphics
 {
+    /// <summary>
+    /// Implements a Scene Graph and functionality to manipulate it.
+    /// </summary>
     public class SceneManager
     {
         private BaseWindow window;
         private Renderer renderer;
+        /// <summary>
+        /// 
+        /// </summary>
         public BaseWindow Window { get => window; set => window = value; }
+        /// <summary>
+        /// 
+        /// </summary>
         public Renderer Renderer { get => renderer; set => renderer = value; }
-
+        /// <summary>
+        /// 
+        /// </summary>
         public void Update()
         {
         }
