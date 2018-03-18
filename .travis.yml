@@ -6,4 +6,9 @@ install:
 - dotnet restore
 
 script:
- - dotnet build
+- dotnet build
+
+notification:
+  email:
+    on_success: always
+    on_failure: always
