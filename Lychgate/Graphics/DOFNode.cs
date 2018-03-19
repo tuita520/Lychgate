@@ -2,9 +2,9 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
-using System;
 using OpenTK;
 using OpenTK.Graphics.OpenGL;
+using System;
 
 namespace Sigon.Lychgate.Graphics
 {

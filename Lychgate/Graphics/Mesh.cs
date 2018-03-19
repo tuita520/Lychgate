@@ -2,10 +2,7 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
-using System.Buffers;
-using OpenTK;
-using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using System.Runtime.CompilerServices;
 
 namespace Sigon.Lychgate.Graphics
 {
@@ -14,54 +11,38 @@ namespace Sigon.Lychgate.Graphics
     /// </summary>
     public class Mesh
     {
-        //List<TexCoordBufferRef> TexCoordBuffers;
-        private PrimitiveType meshType;
-        /// <summary>
-        /// 
-        /// </summary>
-        public PrimitiveType MeshType { get => meshType; set => meshType = value; }
-        //ColorBufferRef Colors;
-        //NormalBufferRef Normals;
-        //IndexBufferRef Indices;
-        private VertexBuffer vertices;
-        /// <summary>
-        /// 
-        /// </summary>
-        public VertexBuffer Vertices { get => vertices; set => vertices = value; }
-
-        private int vbo;
-        private int size;
+        private Vertex[] vertices;
+        private ushort[] indices;
+        private int vbo, ibo;
 
         /// <summary>
         /// 
         /// </summary>
-        public int VertexCount { get => Vertices.Size; set { } }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="type"></param>
-        /// <param name="buf"></param>
-        public Mesh(ref PrimitiveType type, VertexBuffer buf)
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public Vertex this[int n]
         {
-            MeshType = type; Vertices = buf;
-            
-            size = 0;
+            get => vertices[n];
+            set => vertices.SetValue(value, vertices.Length - 1);
         }
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="vertices"></param>
-        public void AddVertices(Vertex[] vertices)
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void SetBuffers()
         {
-            vbo = Renderer.AddVertexBuffer(vertices);
-            size = vertices.Length * 3;
+            vbo = Renderer.AddVertexBuffer(ref vertices);
+            ibo = Renderer.AddIndexBuffer(ref indices);
         }
 
-        //void AddTexCoordBuffer(TexCoordBufferRef ref)
-        //{
-        //    TexCoordBuffers.AddBottom(new TexCoordBufferRef(Ref));
-        //}
+        /// <summary>
+        /// 
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Draw()
+        {
+            Renderer.RenderVertexBuffer(vbo, ibo, indices.Length);
+        }
     }
 }
