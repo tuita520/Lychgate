@@ -2,6 +2,8 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
+using OpenTK;
+
 namespace Sigon.LychgateExample
 {
     public class Program

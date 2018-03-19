@@ -2,6 +2,9 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
+using System.Buffers;
+using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 
 namespace Sigon.Lychgate.Graphics
@@ -26,6 +29,9 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public VertexBuffer Vertices { get => vertices; set => vertices = value; }
 
+        private int vbo;
+        private int size;
+
         /// <summary>
         /// 
         /// </summary>
@@ -39,6 +45,18 @@ namespace Sigon.Lychgate.Graphics
         public Mesh(ref PrimitiveType type, VertexBuffer buf)
         {
             MeshType = type; Vertices = buf;
+            
+            size = 0;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="vertices"></param>
+        public void AddVertices(Vertex[] vertices)
+        {
+            vbo = Renderer.AddVertexBuffer(vertices);
+            size = vertices.Length * 3;
         }
 
         //void AddTexCoordBuffer(TexCoordBufferRef ref)

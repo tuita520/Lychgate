@@ -15,14 +15,12 @@ namespace Sigon.Lychgate.Graphics
     /// </summary>
     public class BaseWindow
     {
+        private SceneManager sceneManager;
         private GameWindow window;
         /// <summary>
         /// 
         /// </summary>
         public GameWindow Window { get => window; set { } }
-
-        private SceneManager sceneManager;
-        private Renderer renderer;
         
         /// <summary>
         /// 
@@ -31,6 +29,7 @@ namespace Sigon.Lychgate.Graphics
         /// <param name="e"></param>
         protected virtual void OnResize(object o, EventArgs e)
         {
+            // TODO: Wrap this in a Renderer Method.
             GL.Viewport(window.ClientRectangle.X, window.ClientRectangle.Y, window.ClientRectangle.Width, window.ClientRectangle.Height);
             var projection = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4, window.Width / (float)window.Height, 1.0f, 64.0f);
 
@@ -47,8 +46,7 @@ namespace Sigon.Lychgate.Graphics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void OnLoad(object o, EventArgs e)
         {
-            GL.ClearColor(0.0f, 0.0f, 0.0f, 0.0f);
-            GL.Enable(EnableCap.CullFace);
+            Renderer.Init();
         }
 
         /// <summary>
@@ -58,7 +56,7 @@ namespace Sigon.Lychgate.Graphics
         /// <param name="e"></param>
         protected virtual void OnRenderFrame(object o, FrameEventArgs e)
         {
-            renderer.ClearScreen();
+            Renderer.ClearScreen();
             // Drawing goes here
             window.SwapBuffers();
         }
@@ -84,8 +82,7 @@ namespace Sigon.Lychgate.Graphics
         {
             window = new GameWindow(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default);
             sceneManager = new SceneManager();
-            renderer = new Renderer();
-
+ 
             // Setting Event-Handlers
             window.Resize += OnResize;
             window.Load += OnLoad;

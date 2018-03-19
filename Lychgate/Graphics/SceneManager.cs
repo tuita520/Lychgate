@@ -10,15 +10,12 @@ namespace Sigon.Lychgate.Graphics
     public class SceneManager
     {
         private BaseWindow window;
-        private Renderer renderer;
+
         /// <summary>
         /// 
         /// </summary>
         public BaseWindow Window { get => window; set => window = value; }
-        /// <summary>
-        /// 
-        /// </summary>
-        public Renderer Renderer { get => renderer; set => renderer = value; }
+
         /// <summary>
         /// 
         /// </summary>
