@@ -26,9 +26,17 @@ namespace Sigon.Lychgate.Graphics
         /// 
         /// </summary>
         /// <param name="m"></param>
-        public void Initialize(Matrix4 m)
+        public DOFNode(Matrix4 m)
         {
             matrix = m;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public override void Draw()
+        {
+            base.Draw();
         }
 
         /// <summary>

@@ -56,9 +56,8 @@ namespace Sigon.Lychgate.Graphics
         /// <param name="e"></param>
         protected virtual void OnRenderFrame(object o, FrameEventArgs e)
         {
-            Renderer.ClearScreen();
             // Drawing goes here
-            window.SwapBuffers();
+            Window.SwapBuffers();
         }
 
         /// <summary>
@@ -84,10 +83,10 @@ namespace Sigon.Lychgate.Graphics
             sceneManager = new SceneManager();
  
             // Setting Event-Handlers
-            window.Resize += OnResize;
-            window.Load += OnLoad;
-            window.RenderFrame += OnRenderFrame;
-            window.UpdateFrame += OnUpdateFrame;
+            Window.Resize += OnResize;
+            Window.Load += OnLoad;
+            Window.RenderFrame += OnRenderFrame;
+            Window.UpdateFrame += OnUpdateFrame;
         }
 
         /// <summary>
@@ -95,9 +94,9 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         /// <param name="fps"></param>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public virtual void Run(int fps)
+        public virtual void Run(double fps)
         {
-            window.Run(fps);
+            Window.Run(fps, 0.0);
         }
     }
 }

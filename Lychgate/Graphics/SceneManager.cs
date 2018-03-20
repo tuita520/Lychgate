@@ -2,6 +2,8 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
+using System.Runtime.CompilerServices;
+
 namespace Sigon.Lychgate.Graphics
 {
     /// <summary>
@@ -9,18 +11,38 @@ namespace Sigon.Lychgate.Graphics
     /// </summary>
     public class SceneManager
     {
-        private BaseWindow window;
+        private SceneNode rootNode;
 
         /// <summary>
         /// 
         /// </summary>
-        public BaseWindow Window { get => window; set => window = value; }
+        public SceneNode RootNode { get => rootNode; set => rootNode = value; }
 
         /// <summary>
         /// 
         /// </summary>
+        public SceneManager()
+        {
+            RootNode = new SceneNode();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public void Draw()
+        {
+            RootNode.Draw();
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Update()
         {
+            RootNode.Update();
         }
     }
 }

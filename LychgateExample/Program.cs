@@ -12,7 +12,7 @@ namespace Sigon.LychgateExample
         {
             GameWindow gw = new GameWindow();
             gw.CreateWindow(800, 600, false, "Lychgate Test");
-            gw.Run(60);
+            gw.Run(60.0);
 
         }
     }

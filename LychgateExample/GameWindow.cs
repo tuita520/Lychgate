@@ -11,6 +11,12 @@ namespace Sigon.LychgateExample
 {
     public class GameWindow : BaseWindow
     {
+        private SceneManager sceneManager;
+
+        public GameWindow()
+        {
+            sceneManager = new SceneManager();
+        }
         public override void CreateWindow(int width, int height, bool fullscreen, string title)
         {
             base.CreateWindow(width, height, fullscreen, title);
@@ -28,8 +34,15 @@ namespace Sigon.LychgateExample
 
         protected override void OnUpdateFrame(object o, FrameEventArgs e)
         {
-            // Update Game World
+            sceneManager.Update();
             base.OnUpdateFrame(o, e); // This has to be called AFTER our update.
+        }
+
+        protected override void OnRenderFrame(object o, FrameEventArgs e)
+        {
+            Renderer.ClearScreen();
+            sceneManager.Draw();
+            base.OnRenderFrame(o, e); // This has to be called AFTER our update.
         }
     }
 }

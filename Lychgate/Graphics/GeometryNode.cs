@@ -11,6 +11,21 @@ namespace Sigon.Lychgate.Graphics
     /// </summary>
     public class GeometryNode : SceneNode, IDisposable
     {
+        private Mesh nodeMesh;
+        /// <summary>
+        /// 
+        /// </summary>
+        public Mesh NodeMesh { get => nodeMesh; set => nodeMesh = value; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public override void Draw()
+        {
+            NodeMesh.Draw();
+            base.Draw(); 
+        }
+
         /// <summary>
         /// 
         /// </summary>

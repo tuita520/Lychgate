@@ -25,6 +25,15 @@ namespace Sigon.Lychgate.Graphics
         /// <summary>
         /// 
         /// </summary>
+        public virtual void Draw()
+        {
+            foreach (SceneNode node in nodeList)
+                node.Draw();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public virtual void Update()
         {
             // loop through the list and update the children
