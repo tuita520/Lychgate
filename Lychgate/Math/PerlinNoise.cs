@@ -2,6 +2,8 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
+using System.Runtime.CompilerServices;
+
 namespace Sigon.Lychgate.Math
 {
     /// <summary>
@@ -9,23 +11,23 @@ namespace Sigon.Lychgate.Math
     /// </summary>
     public class PerlinNoise
     {
-        private int seed;
+        private uint seed;
         /// <summary>
         /// 
         /// </summary>
-        public int Seed { get { return seed; } set { seed = value; } }
+        public uint Seed { get => seed; set => seed = value; }
 
         private int depth;
         /// <summary>
         /// 
         /// </summary>
-        public int Depth { get { return depth; } set { depth = value; } }
+        public int Depth { get => depth; set => depth = value; }
 
         private double add;
         /// <summary>
         /// 
         /// </summary>
-        public double Add { get { return add; } set { add = value; } }
+        public double Add { get => add; set => add = value; }
 
         private double amplitude;
         /// <summary>
@@ -37,7 +39,7 @@ namespace Sigon.Lychgate.Math
         /// <summary>
         /// 
         /// </summary>
-        public double Persistence { get { return persistence; } set { persistence = value; } }
+        public double Persistence { get => persistence; set => persistence = value; }
 
         /// <summary>
         /// 
@@ -119,79 +121,101 @@ namespace Sigon.Lychgate.Math
 
             return total;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public double InterpolatedRand(double x, double y)
+        {
+            uint IntX = (uint)x;
+            double FracX = x - IntX;
+
+            uint IntY = (uint)y;
+            double FracY = y - IntY;
+
+            double V1, V2, V3, V4, ResX1, ResX2;
+
+            V1 = SmoothRand(IntX, IntY);
+            V2 = SmoothRand(IntX + 1, IntY);
+            V3 = SmoothRand(IntX, IntY + 1);
+            V4 = SmoothRand(IntX + 1, IntY + 1);
+
+            ResX1 = Interpolate(V1, V2, FracX);
+            ResX2 = Interpolate(V3, V4, FracX);
+
+            return Interpolate(ResX1, ResX2, FracY);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="V1"></param>
+        /// <param name="V2"></param>
+        /// <param name="Step"></param>
+        /// <returns></returns>
+        public double Interpolate(double V1, double V2, double Step)
+        {
+            double Fact;
+
+            // This interpolation methode is faster than a cosinus function, but it's nearly
+            // equal to the cos-graph. I simply take a square function either in positive
+            // direction or in negative direction starting from 1.0.
+
+            if (Step > 0.5f)
+            {
+                Fact = (1.0f - Step);
+                Fact = Fact * Fact * 2.0f;
+            }
+            else
+            {
+                Fact = 1.0f - Step * Step * 2.0f;
+            }
+
+            return V1 * Fact + V2 * (1.0f - Fact);
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        public double SmoothRand(uint x, uint y)
+        {
+            return Rand(x, y);
+
+            // This is a better, but slower algorithm. Should be tested.
+
+            //double Corners;
+            //double Sides;
+            //double Center;
+
+            //Corners = (Rand(x - 1, y - 1) + Rand(x + 1, y - 1) + Rand(x - 1, y + 1) + Rand(x + 1, y + 1)) * (1.0f / 16.0f);
+            //Sides = (Rand(x - 1, y) + Rand(x + 1, y) + Rand(x, y - 1) + Rand(x, y + 1)) * (1.0f / 8.0f);
+            //Center = Rand(x, y) * (1.0f / 4.0f);
+
+            //return Center + Sides + Corners;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="x"></param>
+        /// <param name="y"></param>
+        /// <returns></returns>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public double Rand(uint x, uint y)
+        {
+            uint Base;
+
+            Base = x + y * 57 + Seed;
+            Base = (Base << 13) ^ Base;
+
+            return (1.0f - ((Base * (Base * Base * 15731 + 789221) + 1376312589) & 0x7fffffff) * (1.0f / 1073741824.0f));
+        }
     }
 }
-#region Todo
-//public double InterpolatedRand(double x, double y)
-//{
-//                SYSUINT L_IntX = (SYSUINT)X;
-//                FLP32 L_FracX = X - L_IntX;
-
-//                SYSUINT L_IntY = (SYSUINT)Y;
-//                FLP32 L_FracY = Y - L_IntY;
-
-//                FLP32 L_V1, L_V2, L_V3, L_V4, L_ResX1, L_ResX2;
-
-//                L_V1 = SmoothRand(L_IntX, L_IntY);
-//                L_V2 = SmoothRand(L_IntX + 1, L_IntY);
-//                L_V3 = SmoothRand(L_IntX, L_IntY + 1);
-//                L_V4 = SmoothRand(L_IntX + 1, L_IntY + 1);
-
-//                L_ResX1 = Interpolate(L_V1, L_V2, L_FracX);
-//                L_ResX2 = Interpolate(L_V3, L_V4, L_FracX);
-
-//                return Interpolate(L_ResX1, L_ResX2, L_FracY);
-//            }
-
-//            FLP32 LC_PerlinNoise2D::Interpolate(FLP32 V1, FLP32 V2, FLP32 Step)
-//{
-//                FLP32 L_Fact;
-
-//                // This interpolation methode is faster than a cosinus function, but it's neary
-//                // equal to the cos-graph. I simply take a square function either in positiv
-//                // direction or in negativ direction starting from 1.0.
-
-//                if (Step > 0.5f)
-//                {
-//                    L_Fact = (1.0f - Step);
-//                    L_Fact = L_Fact * L_Fact * 2.0f;
-//                }
-//                else
-//                {
-//                    L_Fact = 1.0f - Step * Step * 2.0f;
-//                }
-
-//                return V1 * L_Fact + V2 * (1.0f - L_Fact);
-//            }
-
-//            FLP32 LC_PerlinNoise2D::SmoothRand(SYSUINT X, SYSUINT Y)
-//{
-//                return Rand(X, Y);
-
-//                // The following code gives a smoother perlin noise, but it's also quite slow
-//                /*FLP32   L_Corners;
-//                FLP32   L_Sides;
-//                FLP32   L_Center;
-
-//                L_Corners = ( Rand(X-1, Y-1) + Rand(X+1, Y-1) + Rand(X-1, Y+1) + Rand(X+1, Y+1) ) * ( 1.0f / 16.0f );
-//                L_Sides   = ( Rand(X-1, Y  ) + Rand(X+1, Y  ) + Rand(X  , Y-1) + Rand(X  , Y+1) ) * ( 1.0f / 8.0f );
-//                L_Center  =   Rand(X  , Y  ) * ( 1.0f / 4.0f );
-
-//                return L_Center + L_Sides + L_Corners;*/
-//            }
-
-//            FLP32 LC_PerlinNoise2D::Rand(SYSUINT X, SYSUINT Y)
-//{
-//                SYSUINT L_Base;
-
-//                L_Base = X + Y * 57 + m_Seed;
-//                L_Base = (L_Base << 13) ^ L_Base;
-
-//                return (1.0f - ((L_Base * (L_Base * L_Base * 15731 + 789221) + 1376312589) & 0x7fffffff) * (1.0f / 1073741824.0f));
-//            }
-
-
-//        }
-//    }
-//}
-#endregion
