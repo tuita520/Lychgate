@@ -13,7 +13,7 @@ namespace Sigon.Lychgate.Graphics
     /// <summary>
     /// Implements the OpenTK GameWindow class and encapsulates it for use with the Engine.
     /// </summary>
-    public class BaseWindow
+    public class Engine
     {
         private SceneManager sceneManager;
         private GameWindow window;

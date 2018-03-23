@@ -23,9 +23,9 @@ namespace Sigon.Lychgate.Graphics
             ClearScreen();
 
             // Enable counter-clock-wise Back-Face Culling
-            // GL.Enable(EnableCap.CullFace);
-            // GL.CullFace(CullFaceMode.Back);
-            // GL.FrontFace(FrontFaceDirection.Ccw);
+            GL.Enable(EnableCap.CullFace);
+            GL.CullFace(CullFaceMode.Back);
+            GL.FrontFace(FrontFaceDirection.Ccw);
         }
 
         /// <summary>

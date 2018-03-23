@@ -13,8 +13,6 @@ namespace Sigon.Lychgate.Graphics
     /// </summary>
     public class DOFNode : SceneNode, IDisposable
     {
-        private Matrix4 matrix;
-
         /// <summary>
         /// 
         /// </summary>
@@ -38,38 +36,26 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public DOFNode()
         {
-            matrix = new Matrix4();
-            matrix = Matrix4.Identity;
+            
         }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        /// <param name="m"></param>
-        public DOFNode(Matrix4 m)
-        {
-            matrix = m;
-        }
-
-
 
         /// <summary>
         /// 
         /// </summary>
         public override void Draw()
         {
-            base.Draw();
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public void SetMatrix()
-        {
-            matrix *= Matrix4.CreateTranslation(Position);
+            var matrix = new Matrix4();
+            matrix = Matrix4.Identity;
+            
             matrix *= Matrix4.CreateRotationX(RotationX);
             matrix *= Matrix4.CreateRotationY(RotationY);
             matrix *= Matrix4.CreateRotationZ(RotationZ);
+            matrix *= Matrix4.CreateTranslation(Position);
+            GL.PushMatrix();
+            
+            GL.LoadMatrix(ref matrix);
+            base.Draw();
+            GL.PopMatrix();
         }
 
         /// <summary>
@@ -77,12 +63,7 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public override void Update()
         {
-            GL.PushMatrix();
-            SetMatrix();
-            GL.LoadMatrix(ref matrix);
             base.Update();
-
-            GL.PopMatrix();
         }        
     }
 }
