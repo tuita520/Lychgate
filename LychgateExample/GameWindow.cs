@@ -27,7 +27,6 @@ namespace Sigon.LychgateExample
         }
         public override void CreateWindow(int width, int height, bool fullscreen, string title)
         {
-            wintitle = title;
             base.CreateWindow(width, height, fullscreen, title);
 
             Window.KeyDown += OnKeyDown;
