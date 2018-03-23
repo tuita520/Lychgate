@@ -5,13 +5,21 @@
 using System;
 using OpenTK;
 using OpenTK.Input;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using Sigon.Lychgate.Graphics;
 
 namespace Sigon.LychgateExample
 {
     public class GameWindow : BaseWindow
     {
+        private float angle = 0;
+        
         private SceneManager sceneManager;
+        /// <summary>
+        /// 
+        /// </summary>
+        public SceneManager SceneManager { get => sceneManager; set => sceneManager = value; }
 
         public GameWindow()
         {
@@ -19,6 +27,7 @@ namespace Sigon.LychgateExample
         }
         public override void CreateWindow(int width, int height, bool fullscreen, string title)
         {
+            wintitle = title;
             base.CreateWindow(width, height, fullscreen, title);
 
             Window.KeyDown += OnKeyDown;
@@ -26,14 +35,19 @@ namespace Sigon.LychgateExample
 
         protected void OnKeyDown(object o, KeyboardKeyEventArgs e)
         {
-            Console.WriteLine("Taste {0} gedrückt", e.Key.ToString());
-
             if (e.Key == Key.Escape)
                 Window.Close();
         }
 
         protected override void OnUpdateFrame(object o, FrameEventArgs e)
         {
+            (SceneManager.RootNode as DOFNode).RotationZ = angle;
+
+            if (angle == 359)
+                angle = 0;
+            else
+                angle += 0.05f;
+
             sceneManager.Update();
             base.OnUpdateFrame(o, e); // This has to be called AFTER our update.
         }

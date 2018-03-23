@@ -3,6 +3,7 @@
 // See AUTHORS and LICENSE for more Information
 
 using OpenTK;
+using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System;
 
@@ -21,9 +22,13 @@ namespace Sigon.Lychgate.Graphics
         public static int AddVertexBuffer(ref Vertex[] buffer)
         {
             int vbo = GL.GenBuffer();
+            int outval;
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(buffer.Length * Vertex.Stride), buffer, BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out outval);
+            if (outval == 0)
+                throw new Exception("No Buffer data passed to Indexbuffer");
 
             return vbo;
         }
@@ -39,9 +44,13 @@ namespace Sigon.Lychgate.Graphics
                 throw new ArgumentNullException("index data not found");
 
             int ibo = GL.GenBuffer();
+            int outval;
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
             GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(data.Length * sizeof(ushort)), data, BufferUsageHint.DynamicDraw);
+            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out outval);
+            if (outval == 0)
+                throw new Exception("No Buffer data passed to Indexbuffer");
 
             return ibo;
         }
@@ -49,27 +58,55 @@ namespace Sigon.Lychgate.Graphics
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static int AddColorBuffer(ref Color4[] data)
+        {
+            if (data == null)
+                throw new ArgumentNullException("index data not found");
+
+            int cbo = GL.GenBuffer();
+            int outval;
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, cbo);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(data.Length * sizeof(int)*4), data, BufferUsageHint.DynamicDraw);
+            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out outval);
+            if (outval == 0)
+                throw new Exception("No Buffer data passed to Indexbuffer");
+            
+            return cbo;
+        }
+
+
+        /// <summary>
+        /// 
+        /// </summary>
         /// <param name="vbo"></param>
         /// <param name="ibo"></param>
+        /// <param name="cbo"></param>
         /// <param name="count"></param>
-        public static void RenderVertexBuffer(int vbo, int ibo, int count)
+        public static void RenderVertexBuffer(int vbo, int ibo, int cbo, int count)
         {
+
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.NormalArray);
             GL.EnableClientState(ArrayCap.TextureCoordArray);
+            GL.EnableClientState(ArrayCap.ColorArray);
+
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
             GL.VertexPointer(3, VertexPointerType.Float, Vertex.Stride, new IntPtr(0));
             GL.NormalPointer(NormalPointerType.Float, Vertex.Stride, new IntPtr(Vector3.SizeInBytes));
             GL.TexCoordPointer(2, TexCoordPointerType.Float, Vertex.Stride, new IntPtr(2 * Vector3.SizeInBytes));
+            GL.BindBuffer(BufferTarget.ArrayBuffer, cbo);
+            GL.ColorPointer(4, ColorPointerType.Float, 0, new IntPtr(0));
+            GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
 
-            GL.DrawElements(BeginMode.Triangles, count, DrawElementsType.UnsignedInt, ibo);
+            GL.DrawElements(PrimitiveType.Triangles, count, DrawElementsType.UnsignedShort, IntPtr.Zero);
 
-            GL.BindBuffer(BufferTarget.ArrayBuffer, 0);
-            GL.BindBuffer(BufferTarget.ElementArrayBuffer, 0);
             GL.DisableClientState(ArrayCap.VertexArray);
             GL.DisableClientState(ArrayCap.NormalArray);
             GL.DisableClientState(ArrayCap.TextureCoordArray);
+            GL.DisableClientState(ArrayCap.ColorArray);
         }
     }
 }

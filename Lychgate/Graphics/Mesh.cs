@@ -2,6 +2,9 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
+using OpenTK;
+using OpenTK.Graphics;
+using OpenTK.Graphics.OpenGL;
 using System.Runtime.CompilerServices;
 
 namespace Sigon.Lychgate.Graphics
@@ -13,18 +16,23 @@ namespace Sigon.Lychgate.Graphics
     {
         private Vertex[] vertices;
         private ushort[] indices;
-        private int vbo, ibo;
+        private Color4[] colors;
+        private int vbo, ibo, cbo;
 
         /// <summary>
         /// 
         /// </summary>
-        /// <param name="n"></param>
-        /// <returns></returns>
-        public Vertex this[int n]
-        {
-            get => vertices[n];
-            set => vertices.SetValue(value, vertices.Length - 1);
-        }
+        public Vertex[] Vertices { get => vertices; set => vertices = value; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public ushort[] Indices { get => indices; set => indices = value; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Color4[] Colors { get => colors; set => colors = value; }
 
         /// <summary>
         /// 
@@ -34,6 +42,7 @@ namespace Sigon.Lychgate.Graphics
         {
             vbo = Renderer.AddVertexBuffer(ref vertices);
             ibo = Renderer.AddIndexBuffer(ref indices);
+            cbo = Renderer.AddColorBuffer(ref colors);
         }
 
         /// <summary>
@@ -42,7 +51,7 @@ namespace Sigon.Lychgate.Graphics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Draw()
         {
-            Renderer.RenderVertexBuffer(vbo, ibo, indices.Length);
+            Renderer.RenderVertexBuffer(vbo, ibo, cbo, indices.Length);
         }
     }
 }

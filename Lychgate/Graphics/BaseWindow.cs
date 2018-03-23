@@ -30,12 +30,17 @@ namespace Sigon.Lychgate.Graphics
         protected virtual void OnResize(object o, EventArgs e)
         {
             // TODO: Wrap this in a Renderer Method.
+            
             GL.Viewport(window.ClientRectangle.X, window.ClientRectangle.Y, window.ClientRectangle.Width, window.ClientRectangle.Height);
             var projection = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4, window.Width / (float)window.Height, 1.0f, 64.0f);
 
+            GL.PushMatrix();
             GL.MatrixMode(MatrixMode.Projection);
 
             GL.LoadMatrix(ref projection);
+
+            GL.MatrixMode(MatrixMode.Modelview);
+            GL.PopMatrix();
         }
 
         /// <summary>
