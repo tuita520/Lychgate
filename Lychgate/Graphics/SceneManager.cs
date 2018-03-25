@@ -11,12 +11,10 @@ namespace Sigon.Lychgate.Graphics
     /// </summary>
     public class SceneManager
     {
-        private SceneNode rootNode;
-
         /// <summary>
         /// 
         /// </summary>
-        public SceneNode RootNode { get => rootNode; set => rootNode = value; }
+        public SceneNode RootNode { get; set; }
 
         /// <summary>
         /// 

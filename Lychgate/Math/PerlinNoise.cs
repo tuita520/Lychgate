@@ -11,35 +11,30 @@ namespace Sigon.Lychgate.Math
     /// </summary>
     public class PerlinNoise
     {
-        private uint seed;
         /// <summary>
         /// 
         /// </summary>
-        public uint Seed { get => seed; set => seed = value; }
+        public uint Seed { get; set; }
 
-        private int depth;
         /// <summary>
         /// 
         /// </summary>
-        public int Depth { get => depth; set => depth = value; }
+        public int Depth { get; set; }
 
-        private double add;
         /// <summary>
         /// 
         /// </summary>
-        public double Add { get => add; set => add = value; }
+        public double Add { get; set; }
 
-        private double amplitude;
         /// <summary>
         /// 
         /// </summary>
-        public double Amplitude { get { return amplitude; } set { amplitude = value; } }
+        public double Amplitude { get; set; }
 
-        private double persistence;
         /// <summary>
         /// 
         /// </summary>
-        public double Persistence { get => persistence; set => persistence = value; }
+        public double Persistence { get; set; }
 
         /// <summary>
         /// 
@@ -69,16 +64,12 @@ namespace Sigon.Lychgate.Math
         /// </summary>
         public void Create()
         {
-            double range;
-            double summarizedMultiplier;
-            double multiplier;
-
-            range = Amplitude - Add;
+            var range = Amplitude - Add;
             Add += range * 0.5d;
 
             // We get values between -1 and 1 out of the Rand function
-            summarizedMultiplier = 0.0d;
-            multiplier = 2.0d;
+            var summarizedMultiplier = 0.0d;
+            var multiplier = 2.0d;
 
             for (int i = 0; i < Depth; ++i)
             {
@@ -98,12 +89,10 @@ namespace Sigon.Lychgate.Math
         public double GetValue(double x, double y)
         {
             double total = 0;
-            double ampl = Amplitude;
 
-            for (int i = 0; i < Depth; ++i)
+            for (var i = 0; i < Depth; ++i)
             {
                 //   total += InterpolatedRand(x, y) * ampl;
-                ampl *= Persistence;
 
                 x *= 2.0d;
                 y *= 2.0d;
@@ -130,23 +119,21 @@ namespace Sigon.Lychgate.Math
         /// <returns></returns>
         public double InterpolatedRand(double x, double y)
         {
-            uint IntX = (uint)x;
-            double FracX = x - IntX;
+            var intX = (uint)x;
+            var fracX = x - intX;
 
-            uint IntY = (uint)y;
-            double FracY = y - IntY;
+            var intY = (uint)y;
+            var fracY = y - intY;
 
-            double V1, V2, V3, V4, ResX1, ResX2;
+            var v1 = SmoothRand(intX, intY);
+            var v2 = SmoothRand(intX + 1, intY);
+            var v3 = SmoothRand(intX, intY + 1);
+            var v4 = SmoothRand(intX + 1, intY + 1);
 
-            V1 = SmoothRand(IntX, IntY);
-            V2 = SmoothRand(IntX + 1, IntY);
-            V3 = SmoothRand(IntX, IntY + 1);
-            V4 = SmoothRand(IntX + 1, IntY + 1);
+            var resX1 = Interpolate(v1, v2, fracX);
+            var resX2 = Interpolate(v3, v4, fracX);
 
-            ResX1 = Interpolate(V1, V2, FracX);
-            ResX2 = Interpolate(V3, V4, FracX);
-
-            return Interpolate(ResX1, ResX2, FracY);
+            return Interpolate(resX1, resX2, fracY);
         }
 
         /// <summary>
@@ -158,7 +145,7 @@ namespace Sigon.Lychgate.Math
         /// <returns></returns>
         public double Interpolate(double V1, double V2, double Step)
         {
-            double Fact;
+            double fact;
 
             // This interpolation methode is faster than a cosinus function, but it's nearly
             // equal to the cos-graph. I simply take a square function either in positive
@@ -166,15 +153,15 @@ namespace Sigon.Lychgate.Math
 
             if (Step > 0.5f)
             {
-                Fact = (1.0f - Step);
-                Fact = Fact * Fact * 2.0f;
+                fact = (1.0f - Step);
+                fact = fact * fact * 2.0f;
             }
             else
             {
-                Fact = 1.0f - Step * Step * 2.0f;
+                fact = 1.0f - Step * Step * 2.0f;
             }
 
-            return V1 * Fact + V2 * (1.0f - Fact);
+            return V1 * fact + V2 * (1.0f - fact);
         }
 
 
@@ -210,9 +197,7 @@ namespace Sigon.Lychgate.Math
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public double Rand(uint x, uint y)
         {
-            uint Base;
-
-            Base = x + y * 57 + Seed;
+            var Base = x + y * 57 + Seed;
             Base = (Base << 13) ^ Base;
 
             return (1.0f - ((Base * (Base * Base * 15731 + 789221) + 1376312589) & 0x7fffffff) * (1.0f / 1073741824.0f));

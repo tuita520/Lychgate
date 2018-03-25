@@ -5,6 +5,7 @@
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using Sigon.Lychgate.Graphics.Renderer;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -15,13 +16,13 @@ namespace Sigon.Lychgate.Graphics
     /// </summary>
     public class Engine
     {
-        private SceneManager sceneManager;
-        private GameWindow window;
+        private SceneManager _sceneManager;
+
         /// <summary>
         /// 
         /// </summary>
-        public GameWindow Window { get => window; set { } }
-        
+        public GameWindow Window { get; private set; }
+
         /// <summary>
         /// 
         /// </summary>
@@ -31,8 +32,8 @@ namespace Sigon.Lychgate.Graphics
         {
             // TODO: Wrap this in a Renderer Method.
             
-            GL.Viewport(window.ClientRectangle.X, window.ClientRectangle.Y, window.ClientRectangle.Width, window.ClientRectangle.Height);
-            var projection = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4, window.Width / (float)window.Height, 1.0f, 64.0f);
+            GL.Viewport(Window.ClientRectangle.X, Window.ClientRectangle.Y, Window.ClientRectangle.Width, Window.ClientRectangle.Height);
+            var projection = Matrix4.CreatePerspectiveFieldOfView((float)System.Math.PI / 4, Window.Width / (float)Window.Height, 1.0f, 64.0f);
 
             GL.PushMatrix();
             GL.MatrixMode(MatrixMode.Projection);
@@ -51,7 +52,7 @@ namespace Sigon.Lychgate.Graphics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void OnLoad(object o, EventArgs e)
         {
-            Renderer.Init();
+            Render.Init();
         }
 
         /// <summary>
@@ -84,8 +85,8 @@ namespace Sigon.Lychgate.Graphics
         /// <param name="title"></param>
         public virtual void CreateWindow(int width, int height, bool fullscreen, string title)
         {
-            window = new GameWindow(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default);
-            sceneManager = new SceneManager();
+            Window = new GameWindow(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default);
+            _sceneManager = new SceneManager();
  
             // Setting Event-Handlers
             Window.Resize += OnResize;

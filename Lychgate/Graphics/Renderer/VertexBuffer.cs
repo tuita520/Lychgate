@@ -2,17 +2,17 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
+using System;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using System;
 
-namespace Sigon.Lychgate.Graphics
+namespace Sigon.Lychgate.Graphics.Renderer
 {
     /// <summary>
     /// 
     /// </summary>
-    public static partial class Renderer
+    public static partial class Render
     {
         /// <summary>
         /// Adds a <see cref="Vertex"/>Array to the OpenGL Subsystem
@@ -21,12 +21,11 @@ namespace Sigon.Lychgate.Graphics
         /// <returns>The Vertexbuffer Object</returns>
         public static int AddVertexBuffer(ref Vertex[] buffer)
         {
-            int vbo = GL.GenBuffer();
-            int outval;
+            var vbo = GL.GenBuffer();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(buffer.Length * Vertex.Stride), buffer, BufferUsageHint.StaticDraw);
-            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out outval);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out int outval);
             if (outval == 0)
                 throw new Exception("No Buffer data passed to Indexbuffer");
 
@@ -41,14 +40,13 @@ namespace Sigon.Lychgate.Graphics
         public static int AddIndexBuffer(ref ushort[] data)
         {
             if (data == null)
-                throw new ArgumentNullException("index data not found");
+                throw new ArgumentNullException($"index data not found");
 
-            int ibo = GL.GenBuffer();
-            int outval;
+            var ibo = GL.GenBuffer();
 
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);
             GL.BufferData(BufferTarget.ElementArrayBuffer, new IntPtr(data.Length * sizeof(ushort)), data, BufferUsageHint.DynamicDraw);
-            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out outval);
+            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out int outval);
             if (outval == 0)
                 throw new Exception("No Buffer data passed to Indexbuffer");
 
@@ -63,14 +61,13 @@ namespace Sigon.Lychgate.Graphics
         public static int AddColorBuffer(ref Color4[] data)
         {
             if (data == null)
-                throw new ArgumentNullException("index data not found");
+                throw new ArgumentNullException($"index data not found");
 
-            int cbo = GL.GenBuffer();
-            int outval;
+            var cbo = GL.GenBuffer();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, cbo);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(data.Length * sizeof(int)*4), data, BufferUsageHint.DynamicDraw);
-            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out outval);
+            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out int outval);
             if (outval == 0)
                 throw new Exception("No Buffer data passed to Indexbuffer");
             

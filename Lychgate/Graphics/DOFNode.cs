@@ -8,10 +8,11 @@ using System;
 
 namespace Sigon.Lychgate.Graphics
 {
+
     /// <summary>
     /// Translation or DOF (Degrees of Freedom) Node which represents Matrix manipulation of objects in the 3D World.
     /// </summary>
-    public class DOFNode : SceneNode, IDisposable
+    public class DofNode : SceneNode, IDisposable
     {
         /// <summary>
         /// 
@@ -31,21 +32,20 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public float RotationZ { get; set; }
 
+        /// <inheritdoc />
         /// <summary>
-        /// 
         /// </summary>
-        public DOFNode()
+        public DofNode()
         {
             
         }
 
+        /// <inheritdoc />
         /// <summary>
-        /// 
         /// </summary>
         public override void Draw()
         {
-            var matrix = new Matrix4();
-            matrix = Matrix4.Identity;
+            var matrix = Matrix4.Identity;
             
             matrix *= Matrix4.CreateRotationX(RotationX);
             matrix *= Matrix4.CreateRotationY(RotationY);

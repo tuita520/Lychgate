@@ -6,22 +6,20 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using Sigon.Lychgate.Graphics;
+using Sigon.Lychgate.Graphics.Renderer;
 
 namespace Sigon.LychgateExample
 {
     public class Game : Engine
     {
-        private float angle = 0;
-        
-        private SceneManager sceneManager;
         /// <summary>
         /// 
         /// </summary>
-        public SceneManager SceneManager { get => sceneManager; set => sceneManager = value; }
+        public SceneManager SceneManager { get; set; }
 
         public Game()
         {
-            sceneManager = new SceneManager();
+            SceneManager = new SceneManager();
         }
         public override void CreateWindow(int width, int height, bool fullscreen, string title)
         {
@@ -36,25 +34,31 @@ namespace Sigon.LychgateExample
                 Window.Close();
 
             if (e.Key == Key.Up)
-                (SceneManager.RootNode as DOFNode).RotationX -= 0.05f;
+                ((DofNode) SceneManager.RootNode).RotationX -= 0.1f;
             if (e.Key == Key.Down)
-                (SceneManager.RootNode as DOFNode).RotationX += 0.05f;
+                ((DofNode) SceneManager.RootNode).RotationX += 0.1f;
             if(e.Key == Key.Left)
-                (SceneManager.RootNode as DOFNode).RotationY -= 0.05f;
+                ((DofNode) SceneManager.RootNode).RotationY -= 0.1f;
             if(e.Key == Key.Right)
-                (SceneManager.RootNode as DOFNode).RotationY += 0.05f;
+                ((DofNode) SceneManager.RootNode).RotationY += 0.1f;
+
+            if (e.Key == Key.F11)
+                if (Window.WindowState == WindowState.Normal)
+                    Window.WindowState = WindowState.Fullscreen;
+                else
+                    Window.WindowState = WindowState.Normal;
         }
 
         protected override void OnUpdateFrame(object o, FrameEventArgs e)
         {
-            sceneManager.Update();
+            SceneManager.Update();
             base.OnUpdateFrame(o, e); // This has to be called AFTER our update.
         }
 
         protected override void OnRenderFrame(object o, FrameEventArgs e)
         {
-            Renderer.ClearScreen();
-            sceneManager.Draw();
+            Render.ClearScreen();
+            SceneManager.Draw();
             base.OnRenderFrame(o, e); // This has to be called AFTER our update.
         }
 
@@ -92,15 +96,15 @@ namespace Sigon.LychgateExample
                     new Color4(255,255,0,255),
                     new Color4(0,255,255,255),
                     new Color4(255,255,255,255),
-                    new Color4(255,0,255,255),
-                    new Color4(200,0,200,200)
+                    new Color4(0,0,255,255),
+                    new Color4(200,128,200,200)
                 }
             };
 
             mesh.SetBuffers();
 
-            game.SceneManager.RootNode = new DOFNode();
-            (game.SceneManager.RootNode as DOFNode).Position = new Vector3(0.0f, 0.0f, -6.0f);
+            game.SceneManager.RootNode = new DofNode();
+            ((DofNode) game.SceneManager.RootNode).Position = new Vector3(0.0f, 0.0f, -6.0f);
             var node = new GeometryNode
             {
                 NodeMesh = mesh

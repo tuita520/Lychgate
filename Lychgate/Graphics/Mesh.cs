@@ -2,9 +2,8 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
-using OpenTK;
 using OpenTK.Graphics;
-using OpenTK.Graphics.OpenGL;
+using Sigon.Lychgate.Graphics.Renderer;
 using System.Runtime.CompilerServices;
 
 namespace Sigon.Lychgate.Graphics
@@ -14,25 +13,25 @@ namespace Sigon.Lychgate.Graphics
     /// </summary>
     public class Mesh
     {
-        private Vertex[] vertices;
-        private ushort[] indices;
-        private Color4[] colors;
-        private int vbo, ibo, cbo;
+        private Vertex[] _vertices;
+        private ushort[] _indices;
+        private Color4[] _colors;
+        private int _vbo, _ibo, _cbo;
 
         /// <summary>
         /// 
         /// </summary>
-        public Vertex[] Vertices { get => vertices; set => vertices = value; }
+        public Vertex[] Vertices { get => _vertices; set => _vertices = value; }
 
         /// <summary>
         /// 
         /// </summary>
-        public ushort[] Indices { get => indices; set => indices = value; }
+        public ushort[] Indices { get => _indices; set => _indices = value; }
 
         /// <summary>
         /// 
         /// </summary>
-        public Color4[] Colors { get => colors; set => colors = value; }
+        public Color4[] Colors { get => _colors; set => _colors = value; }
 
         /// <summary>
         /// 
@@ -40,9 +39,9 @@ namespace Sigon.Lychgate.Graphics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void SetBuffers()
         {
-            vbo = Renderer.AddVertexBuffer(ref vertices);
-            ibo = Renderer.AddIndexBuffer(ref indices);
-            cbo = Renderer.AddColorBuffer(ref colors);
+            _vbo = Render.AddVertexBuffer(ref _vertices);
+            _ibo = Render.AddIndexBuffer(ref _indices);
+            _cbo = Render.AddColorBuffer(ref _colors);
         }
 
         /// <summary>
@@ -51,7 +50,7 @@ namespace Sigon.Lychgate.Graphics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         public void Draw()
         {
-            Renderer.RenderVertexBuffer(vbo, ibo, cbo, indices.Length);
+            Render.RenderVertexBuffer(_vbo, _ibo, _cbo, _indices.Length);
         }
     }
 }

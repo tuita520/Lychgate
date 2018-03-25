@@ -7,19 +7,19 @@ using System.Collections.Generic;
 
 namespace Sigon.Lychgate.Graphics
 {
+    /// <inheritdoc />
     /// <summary>
-    /// 
     /// </summary>
     public class SceneNode : IDisposable
     {
-        private List<SceneNode> nodeList;
+        private readonly List<SceneNode> _nodeList;
         
         /// <summary>
         /// 
         /// </summary>
         public SceneNode()
         {
-            nodeList = new List<SceneNode>();
+            _nodeList = new List<SceneNode>();
         }
 
         /// <summary>
@@ -27,7 +27,7 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public virtual void Draw()
         {
-            foreach (SceneNode node in nodeList)
+            foreach (var node in _nodeList)
                 node.Draw();
         }
 
@@ -37,7 +37,7 @@ namespace Sigon.Lychgate.Graphics
         public virtual void Update()
         {
             // loop through the list and update the children
-            foreach (SceneNode node in nodeList)
+            foreach (var node in _nodeList)
                 node.Update();
         }
 
@@ -46,10 +46,10 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public virtual void Destroy()
         {
-            foreach (SceneNode node in nodeList)
+            foreach (var node in _nodeList)
                 node.Dispose();
 
-            nodeList.Clear();
+            _nodeList.Clear();
         }
 
         /// <summary>
@@ -58,11 +58,11 @@ namespace Sigon.Lychgate.Graphics
         /// <param name="node"></param>
         public virtual void AddChild(SceneNode node)
         {
-            nodeList.Add(node);
+            _nodeList.Add(node);
         }
 
+        /// <inheritdoc />
         /// <summary>
-        /// 
         /// </summary>
         public virtual void Dispose()
         {
