@@ -4,6 +4,7 @@
 
 using System;
 using System.Runtime.CompilerServices;
+using OpenTK;
 using OpenTK.Graphics.OpenGL;
 
 namespace Sigon.Lychgate.Graphics.Renderer
@@ -35,6 +36,16 @@ namespace Sigon.Lychgate.Graphics.Renderer
         public static void ClearScreen()
         {
             GL.Clear(ClearBufferMask.ColorBufferBit | ClearBufferMask.DepthBufferBit);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="transformation"></param>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static void SetTransformation(Matrix4 transformation)
+        {
+            GL.LoadMatrix(ref transformation);
         }
 
         /// <summary>

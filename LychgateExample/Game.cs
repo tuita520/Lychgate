@@ -34,13 +34,13 @@ namespace Sigon.LychgateExample
                 Window.Close();
 
             if (e.Key == Key.Up)
-                ((DofNode) SceneManager.RootNode).RotationX -= 0.1f;
+                SceneManager.RootNode.RelativeRotation.X -= 0.1f;
             if (e.Key == Key.Down)
-                ((DofNode) SceneManager.RootNode).RotationX += 0.1f;
+                SceneManager.RootNode.RelativeRotation.X += 0.1f;
             if(e.Key == Key.Left)
-                ((DofNode) SceneManager.RootNode).RotationY -= 0.1f;
+                SceneManager.RootNode.RelativeRotation.Y -= 0.1f;
             if(e.Key == Key.Right)
-                ((DofNode) SceneManager.RootNode).RotationY += 0.1f;
+                SceneManager.RootNode.RelativeRotation.Y += 0.1f;
 
             if (e.Key == Key.F11)
                 if (Window.WindowState == WindowState.Normal)
@@ -103,15 +103,14 @@ namespace Sigon.LychgateExample
 
             mesh.SetBuffers();
 
-            game.SceneManager.RootNode = new DofNode();
-            ((DofNode) game.SceneManager.RootNode).Position = new Vector3(0.0f, 0.0f, -6.0f);
             var node = new GeometryNode
             {
                 NodeMesh = mesh
             };
 
-            game.SceneManager.RootNode.AddChild(node);
-
+            game.SceneManager.RootNode = node;
+            game.SceneManager.RootNode.RelativePosition = new Vector3(0.0f, 0.0f, -6.0f);
+            
             game.Run(60.0);
         }
     }

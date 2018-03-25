@@ -2,38 +2,43 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
-using System;
+using OpenTK;
 using Sigon.Lychgate.Graphics.Renderer;
 
 namespace Sigon.Lychgate.Graphics
 {
+
     /// <summary>
     /// 
     /// </summary>
-    public class GeometryNode : SceneNode, IDisposable
+    public class Animator
     {
         /// <summary>
         /// 
         /// </summary>
-        public Mesh NodeMesh { get; set; }
+        public Vector3 Position { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public override void Draw()
-        {
-            Render.SetTransformation(AbsolutePosition);
-            NodeMesh.Draw();
-            base.Draw(); 
-        }
+        public float RotationX { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public float RotationY { get; set; }
+        /// <summary>
+        /// 
+        /// </summary>
+        public float RotationZ { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        public override void Update()
+        /// <param name="node"></param>
+        public virtual void Animate(SceneNode node)
         {
-            // Update our geometry here...
-            base.Update();
+            
         }
+
     }
 }
