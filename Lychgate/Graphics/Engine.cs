@@ -5,7 +5,7 @@
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
-using Sigon.Lychgate.Graphics.Renderer;
+using Sigon.Lychgate.Graphics.Rendering;
 using System;
 using System.Runtime.CompilerServices;
 
@@ -52,7 +52,7 @@ namespace Sigon.Lychgate.Graphics
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
         protected virtual void OnLoad(object o, EventArgs e)
         {
-            Render.Init();
+            Renderer.Init();
         }
 
         /// <summary>

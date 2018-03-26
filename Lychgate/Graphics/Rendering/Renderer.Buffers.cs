@@ -2,17 +2,17 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information
 
-using System;
 using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
+using System;
 
-namespace Sigon.Lychgate.Graphics.Renderer
+namespace Sigon.Lychgate.Graphics.Rendering
 {
     /// <summary>
     /// 
     /// </summary>
-    public static partial class Render
+    public static partial class Renderer
     {
         /// <summary>
         /// Adds a <see cref="Vertex"/>Array to the OpenGL Subsystem
@@ -84,7 +84,6 @@ namespace Sigon.Lychgate.Graphics.Renderer
         /// <param name="count"></param>
         public static void RenderVertexBuffer(int vbo, int ibo, int cbo, int count)
         {
-
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.NormalArray);
             GL.EnableClientState(ArrayCap.TextureCoordArray);

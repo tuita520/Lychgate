@@ -6,7 +6,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Input;
 using Sigon.Lychgate.Graphics;
-using Sigon.Lychgate.Graphics.Renderer;
+using Sigon.Lychgate.Graphics.Rendering;
 
 namespace Sigon.LychgateExample
 {
@@ -15,11 +15,11 @@ namespace Sigon.LychgateExample
         /// <summary>
         /// 
         /// </summary>
-        public SceneManager SceneManager { get; set; }
+        public SceneManager sceneManager { get; set; }
 
         public Game()
         {
-            SceneManager = new SceneManager();
+            sceneManager = new SceneManager();
         }
         public override void CreateWindow(int width, int height, bool fullscreen, string title)
         {
@@ -34,13 +34,13 @@ namespace Sigon.LychgateExample
                 Window.Close();
 
             if (e.Key == Key.Up)
-                SceneManager.RootNode.RelativeRotation.X -= 0.1f;
+                sceneManager.RootNode.RelativeRotation.X -= 0.1f;
             if (e.Key == Key.Down)
-                SceneManager.RootNode.RelativeRotation.X += 0.1f;
+                sceneManager.RootNode.RelativeRotation.X += 0.1f;
             if(e.Key == Key.Left)
-                SceneManager.RootNode.RelativeRotation.Y -= 0.1f;
+                sceneManager.RootNode.RelativeRotation.Y -= 0.1f;
             if(e.Key == Key.Right)
-                SceneManager.RootNode.RelativeRotation.Y += 0.1f;
+                sceneManager.RootNode.RelativeRotation.Y += 0.1f;
 
             if (e.Key == Key.F11)
                 if (Window.WindowState == WindowState.Normal)
@@ -51,22 +51,22 @@ namespace Sigon.LychgateExample
 
         protected override void OnUpdateFrame(object o, FrameEventArgs e)
         {
-            SceneManager.Update();
+            sceneManager.Update();
             base.OnUpdateFrame(o, e); // This has to be called AFTER our update.
         }
 
         protected override void OnRenderFrame(object o, FrameEventArgs e)
         {
-            Render.ClearScreen();
-            SceneManager.Draw();
+            Renderer.ClearScreen();
+            sceneManager.Draw();
             base.OnRenderFrame(o, e); // This has to be called AFTER our update.
         }
 
         public static void Main(string[] args)
         {
-            var game = new Game();
+            var gameObject = new Game();
           
-            game.CreateWindow(800, 600, false, "Lychgate Test");
+            gameObject.CreateWindow(800, 600, false, "Lychgate Test");
 
             var vertices = new Vertex[5];
              
@@ -101,17 +101,16 @@ namespace Sigon.LychgateExample
                 }
             };
 
-            mesh.SetBuffers();
-
-            var node = new GeometryNode
+            var node = new MeshSceneNode
             {
-                NodeMesh = mesh
+                NodeMesh = mesh,
+                RelativePosition = new Vector3(0.0f, 0.0f, -6.0f)
             };
 
-            game.SceneManager.RootNode = node;
-            game.SceneManager.RootNode.RelativePosition = new Vector3(0.0f, 0.0f, -6.0f);
-            
-            game.Run(60.0);
+            node.SetBuffers();
+
+            gameObject.sceneManager.RootNode = node;
+            gameObject.Run(60.0);
         }
     }
 }

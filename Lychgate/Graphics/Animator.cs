@@ -3,11 +3,9 @@
 // See AUTHORS and LICENSE for more Information
 
 using OpenTK;
-using Sigon.Lychgate.Graphics.Renderer;
 
 namespace Sigon.Lychgate.Graphics
 {
-
     /// <summary>
     /// 
     /// </summary>
@@ -39,6 +37,5 @@ namespace Sigon.Lychgate.Graphics
         {
             
         }
-
     }
 }

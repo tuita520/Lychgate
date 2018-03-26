@@ -3,8 +3,6 @@
 // See AUTHORS and LICENSE for more Information
 
 using OpenTK.Graphics;
-using Sigon.Lychgate.Graphics.Renderer;
-using System.Runtime.CompilerServices;
 
 namespace Sigon.Lychgate.Graphics
 {
@@ -16,41 +14,35 @@ namespace Sigon.Lychgate.Graphics
         private Vertex[] _vertices;
         private ushort[] _indices;
         private Color4[] _colors;
-        private int _vbo, _ibo, _cbo;
 
         /// <summary>
         /// 
         /// </summary>
-        public Vertex[] Vertices { get => _vertices; set => _vertices = value; }
+        public ref Vertex[] Vertices => ref _vertices;
 
         /// <summary>
         /// 
         /// </summary>
-        public ushort[] Indices { get => _indices; set => _indices = value; }
+        public ref ushort[] Indices => ref _indices;
 
         /// <summary>
         /// 
         /// </summary>
-        public Color4[] Colors { get => _colors; set => _colors = value; }
+        public ref Color4[] Colors => ref _colors;
 
         /// <summary>
         /// 
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void SetBuffers()
-        {
-            _vbo = Render.AddVertexBuffer(ref _vertices);
-            _ibo = Render.AddIndexBuffer(ref _indices);
-            _cbo = Render.AddColorBuffer(ref _colors);
-        }
+        public int VertexBufferId { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Draw()
-        {
-            Render.RenderVertexBuffer(_vbo, _ibo, _cbo, _indices.Length);
-        }
+        public int IndexBufferId { get; set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public int ColorBufferId { get; set; }
     }
 }

@@ -3,14 +3,14 @@
 // See AUTHORS and LICENSE for more Information
 
 using System;
-using Sigon.Lychgate.Graphics.Renderer;
+using Sigon.Lychgate.Graphics.Rendering;
 
 namespace Sigon.Lychgate.Graphics
 {
     /// <summary>
     /// 
     /// </summary>
-    public class GeometryNode : SceneNode, IDisposable
+    public class MeshSceneNode : SceneNode, IDisposable
     {
         /// <summary>
         /// 
@@ -20,10 +20,20 @@ namespace Sigon.Lychgate.Graphics
         /// <summary>
         /// 
         /// </summary>
+        public void SetBuffers()
+        {
+            NodeMesh.VertexBufferId = Renderer.AddVertexBuffer(ref NodeMesh.Vertices);
+            NodeMesh.IndexBufferId = Renderer.AddIndexBuffer(ref NodeMesh.Indices);
+            NodeMesh.ColorBufferId = Renderer.AddColorBuffer(ref NodeMesh.Colors);
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public override void Draw()
         {
-            Render.SetTransformation(AbsolutePosition);
-            NodeMesh.Draw();
+            Renderer.SetTransformation(AbsolutePosition);
+            Renderer.RenderVertexBuffer(NodeMesh.VertexBufferId, NodeMesh.IndexBufferId, NodeMesh.ColorBufferId, NodeMesh.Indices.Length);
             base.Draw(); 
         }
 

@@ -2,9 +2,9 @@
 // This file is part of the "Sigon MMORPG Framework"
 // See AUTHORS and LICENSE for more Information 
 
+using Sigon.Lychgate.Graphics.Rendering;
 using System.Collections.Generic;
 using System.IO;
-using Sigon.Lychgate.Graphics.Renderer;
 
 namespace Sigon.Lychgate.Graphics.Shader
 {
@@ -25,7 +25,7 @@ namespace Sigon.Lychgate.Graphics.Shader
         public ShaderProgram()
         {
             _shaderList = new List<Shader>();
-            _pobj = Render.CreateShaderProgram();
+            _pobj = Renderer.CreateShaderProgram();
         }
 
         /// <summary>
@@ -36,10 +36,10 @@ namespace Sigon.Lychgate.Graphics.Shader
         {
             var sr = new StreamReader(shader.Source);
 
-            shader.ShaderId = Render.CreateShaderObject(shader.Type);
-            Render.ShaderSource(shader.ShaderId, sr.ReadToEnd());
-            Render.CompileShader(shader.ShaderId);
-            Render.AttachShader(_pobj, shader.ShaderId);
+            shader.ShaderId = Renderer.CreateShaderObject(shader.Type);
+            Renderer.ShaderSource(shader.ShaderId, sr.ReadToEnd());
+            Renderer.CompileShader(shader.ShaderId);
+            Renderer.AttachShader(_pobj, shader.ShaderId);
 
             _shaderList.Add(shader);
             
