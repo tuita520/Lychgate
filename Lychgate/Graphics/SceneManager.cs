@@ -9,20 +9,12 @@ namespace Sigon.Lychgate.Graphics
     /// <summary>
     /// Implements a Scene Graph and functionality to manipulate it.
     /// </summary>
-    public class SceneManager
+    public sealed class SceneManager
     {
         /// <summary>
         /// 
         /// </summary>
         public SceneNode RootNode { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public SceneManager()
-        {
-            RootNode = new SceneNode();
-        }
 
         /// <summary>
         /// 
@@ -41,6 +33,23 @@ namespace Sigon.Lychgate.Graphics
         public void Update()
         {
             RootNode.Update();
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="parent"></param>
+        /// <param name="mesh"></param>
+        public MeshSceneNode AddMeshSceneNode(SceneNode parent, Mesh mesh)
+        {
+            var node = new MeshSceneNode(mesh);
+
+            if (parent != null)
+                parent.AddChild(node);
+            else
+                RootNode = node;
+
+            return node;
         }
     }
 }

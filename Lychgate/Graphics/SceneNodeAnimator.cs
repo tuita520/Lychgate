@@ -9,7 +9,7 @@ namespace Sigon.Lychgate.Graphics
     /// <summary>
     /// 
     /// </summary>
-    public class Animator
+    public abstract class SceneNodeAnimator
     {
         /// <summary>
         /// 
@@ -33,9 +33,6 @@ namespace Sigon.Lychgate.Graphics
         /// 
         /// </summary>
         /// <param name="node"></param>
-        public virtual void Animate(SceneNode node)
-        {
-            
-        }
+        public abstract void Animate(SceneNode node);
     }
 }

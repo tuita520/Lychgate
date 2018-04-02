@@ -101,9 +101,8 @@ namespace Sigon.LychgateExample
                 }
             };
 
-            var node = new MeshSceneNode
+            var node = new MeshSceneNode(mesh)
             {
-                NodeMesh = mesh,
                 RelativePosition = new Vector3(0.0f, 0.0f, -6.0f)
             };
 

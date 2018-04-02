@@ -20,6 +20,15 @@ namespace Sigon.Lychgate.Graphics
         /// <summary>
         /// 
         /// </summary>
+        /// <param name="mesh"></param>
+        public MeshSceneNode(Mesh mesh)
+        {
+            NodeMesh = mesh;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
         public void SetBuffers()
         {
             NodeMesh.VertexBufferId = Renderer.AddVertexBuffer(ref NodeMesh.Vertices);
@@ -35,15 +44,6 @@ namespace Sigon.Lychgate.Graphics
             Renderer.SetTransformation(AbsolutePosition);
             Renderer.RenderVertexBuffer(NodeMesh.VertexBufferId, NodeMesh.IndexBufferId, NodeMesh.ColorBufferId, NodeMesh.Indices.Length);
             base.Draw(); 
-        }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        public override void Update()
-        {
-            // Update our geometry here...
-            base.Update();
         }
     }
 }

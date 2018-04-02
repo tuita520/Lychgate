@@ -11,11 +11,11 @@ namespace Sigon.Lychgate.Graphics
     /// <inheritdoc />
     /// <summary>
     /// </summary>
-    public class SceneNode : IDisposable
+    public abstract class SceneNode : IDisposable
     {
         private Matrix4 _relativeTransformation;
         private readonly List<SceneNode> _nodeList;
-        private readonly List<Animator> _animatorList;
+        private readonly List<SceneNodeAnimator> _animatorList;
 
         private Vector3 _relativePosition;
         private Vector3 _relativeRotation;
@@ -58,12 +58,12 @@ namespace Sigon.Lychgate.Graphics
         /// <summary>
         /// 
         /// </summary>
-        public SceneNode()
+        protected SceneNode()
         {
             Parent = null;
             _relativeTransformation = Matrix4.Identity;
             _nodeList = new List<SceneNode>();
-            _animatorList = new List<Animator>();
+            _animatorList = new List<SceneNodeAnimator>();
         }
 
         /// <summary>
@@ -71,8 +71,7 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public virtual void Draw()
         {
-            foreach (var anim in _animatorList)
-                anim.Animate(this);
+            
 
             foreach (var node in _nodeList)
                 node.Draw();
@@ -85,6 +84,9 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public virtual void Update()
         {
+            foreach (var anim in _animatorList)
+                anim.Animate(this);
+
             // loop through the list and update the children
             foreach (var node in _nodeList)
                 node.Update();
@@ -114,7 +116,7 @@ namespace Sigon.Lychgate.Graphics
         /// 
         /// </summary>
         /// <param name="anim"></param>
-        public virtual void AddAnimator(Animator anim)
+        public virtual void AddAnimator(SceneNodeAnimator anim)
         {
             _animatorList.Add(anim);
         }
