@@ -4,7 +4,7 @@
     <OutputType>Exe</OutputType>
     <TargetFrameworks>netcoreapp2.0;net46</TargetFrameworks>
     <TargetFrameworks Condition="'$(OS)' != 'Windows_NT'">netcoreapp2.0</TargetFrameworks>
-    <RootNamespace>Sigon.LychgateExample</RootNamespace>
+    <RootNamespace>Sigon.PyramidSample</RootNamespace>
     <ApplicationIcon />
     <StartupObject />
   </PropertyGroup>
@@ -15,7 +15,7 @@
     <PackageReference Include="OpenTK" Version="2.0.0" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\Lychgate\Lychgate.csproj" />
+    <ProjectReference Include="..\..\Lychgate\Lychgate.csproj" />
   </ItemGroup>
 
 </Project>

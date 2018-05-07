@@ -1,31 +1,62 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27130.2036
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Lychgate", "Lychgate\Lychgate.csproj", "{FE49A5E4-0007-4A5C-A6F0-D73EB1CB4039}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LychgateExample", "LychgateExample\LychgateExample.csproj", "{1730A9F1-E7A6-4369-A70B-282D7A528035}"
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Samples", "Samples", "{BACBD666-6732-4594-9839-00C5F22FB1E0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PyramidSample", "Samples\PyramidSample\PyramidSample.csproj", "{9C4D2AA9-3392-48A0-BA84-4A672AB98211}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Test", "Test\Test.csproj", "{619F85DD-95F0-48DC-992C-EB727A2944BA}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
 		Release|Any CPU = Release|Any CPU
+		Debug|x64 = Debug|x64
+		Debug|x86 = Debug|x86
+		Release|x64 = Release|x64
+		Release|x86 = Release|x86
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
 		{FE49A5E4-0007-4A5C-A6F0-D73EB1CB4039}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{FE49A5E4-0007-4A5C-A6F0-D73EB1CB4039}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{FE49A5E4-0007-4A5C-A6F0-D73EB1CB4039}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{FE49A5E4-0007-4A5C-A6F0-D73EB1CB4039}.Release|Any CPU.Build.0 = Release|Any CPU
-		{1730A9F1-E7A6-4369-A70B-282D7A528035}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{1730A9F1-E7A6-4369-A70B-282D7A528035}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{1730A9F1-E7A6-4369-A70B-282D7A528035}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{1730A9F1-E7A6-4369-A70B-282D7A528035}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Debug|x64.ActiveCfg = Debug|x64
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Debug|x64.Build.0 = Debug|x64
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Debug|x86.ActiveCfg = Debug|x86
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Debug|x86.Build.0 = Debug|x86
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Release|x64.ActiveCfg = Release|x64
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Release|x64.Build.0 = Release|x64
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Release|x86.ActiveCfg = Release|x86
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211}.Release|x86.Build.0 = Release|x86
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Debug|x64.ActiveCfg = Debug|x64
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Debug|x64.Build.0 = Debug|x64
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Debug|x86.ActiveCfg = Debug|x86
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Debug|x86.Build.0 = Debug|x86
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Release|Any CPU.Build.0 = Release|Any CPU
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Release|x64.ActiveCfg = Release|x64
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Release|x64.Build.0 = Release|x64
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Release|x86.ActiveCfg = Release|x86
+		{619F85DD-95F0-48DC-992C-EB727A2944BA}.Release|x86.Build.0 = Release|x86
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {EA60D62F-1A16-4741-B47D-4472818D7CD5}
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{9C4D2AA9-3392-48A0-BA84-4A672AB98211} = {BACBD666-6732-4594-9839-00C5F22FB1E0}
 	EndGlobalSection
 EndGlobal
