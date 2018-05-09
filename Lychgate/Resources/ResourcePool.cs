@@ -24,6 +24,21 @@ namespace Sigon.Lychgate.Resources
         /// <summary>
         ///
         /// </summary>        
-        public abstract Stream GetResourceByName(string name);
+        public abstract MemoryStream GetResourceByName(string name, ResourceType type);
+    }
+
+    /// <summary>
+    ///
+    /// </summary>
+    public enum ResourceType
+    {
+        /// <summary>
+        ///
+        /// </summary>
+        Binary,
+        /// <summary>
+        ///
+        /// </summary>
+        Ascii
     }
 }

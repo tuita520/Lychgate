@@ -30,7 +30,7 @@ namespace Sigon.Lychgate.Resources
         /// <summary>
         ///
         /// </summary>
-        public override Stream GetResourceByName(string name)
+        public override MemoryStream GetResourceByName(string name, ResourceType type)
         {
             return null;
         }
