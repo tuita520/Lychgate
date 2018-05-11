@@ -17,13 +17,11 @@ namespace Sigon.LychgateExample
         /// </summary>
         public SceneManager sceneManager { get; set; }
 
-        public Game()
+        public Game(int width, int height, bool fullscreen, string title)
         {
             sceneManager = new SceneManager();
-        }
-        public override void CreateWindow(int width, int height, bool fullscreen, string title)
-        {
-            base.CreateWindow(width, height, fullscreen, title);
+
+            CreateWindow(width, height, fullscreen, title);
 
             Window.KeyDown += OnKeyDown;
         }
@@ -62,12 +60,8 @@ namespace Sigon.LychgateExample
             base.OnRenderFrame(o, e); // This has to be called AFTER our update.
         }
 
-        public static void Main(string[] args)
+        public Mesh CreatePyramidMesh()
         {
-            var gameObject = new Game();
-          
-            gameObject.CreateWindow(800, 600, false, "Lychgate Test");
-
             var vertices = new Vertex[5];
              
             // Pyramid drawing.
@@ -101,14 +95,18 @@ namespace Sigon.LychgateExample
                 }
             };
 
-            var node = new MeshSceneNode(mesh)
-            {
-                RelativePosition = new Vector3(0.0f, 0.0f, -6.0f)
-            };
+            return mesh;
+        }
 
-            node.SetBuffers();
+        public static void Main(string[] args)
+        {
+            var gameObject = new Game(800, 600, false, "Lychgate Test");
 
-            gameObject.sceneManager.RootNode = node;
+            var meshNode = gameObject.sceneManager.AddMeshSceneNode(null, gameObject.CreatePyramidMesh());
+            
+            meshNode.RelativePosition = new Vector3(0.0f, 0.0f, -6.0f);
+            meshNode.SetBuffers();
+
             gameObject.Run(60.0);
         }
     }
