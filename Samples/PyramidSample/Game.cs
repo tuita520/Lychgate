@@ -61,29 +61,18 @@ namespace Sigon.LychgateExample
         }
 
         public Mesh CreatePyramidMesh()
-        {
-            var vertices = new Vertex[5];
-             
+        {    
             // Pyramid drawing.
-            vertices[0].Position = new Vector3(1.0f, -1.0f, 1.0f);
-            vertices[0].Normal = new Vector3();
-            vertices[0].TexCoords = new Vector2();
-            vertices[1].Position = new Vector3(1.0f, -1.0f, -1.0f);
-            vertices[1].Normal = new Vector3();
-            vertices[1].TexCoords = new Vector2();
-            vertices[2].Position = new Vector3(-1.0f, -1.0f, -1.0f);
-            vertices[2].Normal = new Vector3();
-            vertices[2].TexCoords = new Vector2();
-            vertices[3].Position = new Vector3(-1.0f, -1.0f, 1.0f);
-            vertices[3].Normal = new Vector3();
-            vertices[3].TexCoords = new Vector2();
-            vertices[4].Position = new Vector3(0.0f, 1.0f, 0.0f);
-            vertices[4].Normal = new Vector3();
-            vertices[4].TexCoords = new Vector2();
-
             var mesh = new Mesh
             {
-                Vertices = vertices,
+                Vertices = new Vector3[5]
+                {
+                    new Vector3(1.0f, -1.0f, 1.0f),
+                    new Vector3(1.0f, -1.0f, -1.0f),
+                    new Vector3(-1.0f, -1.0f, -1.0f),
+                    new Vector3(-1.0f, -1.0f, 1.0f),
+                    new Vector3(0.0f, 1.0f, 0.0f)
+                },
                 Indices = new ushort[18] {2, 1, 0, 3, 2, 0, 0, 4, 3, 1, 4, 0, 2, 4, 1, 3, 4, 2},
                 Colors = new Color4[5]
                 {
@@ -94,7 +83,6 @@ namespace Sigon.LychgateExample
                     new Color4(200,128,200,200)
                 }
             };
-
             return mesh;
         }
 
@@ -105,7 +93,6 @@ namespace Sigon.LychgateExample
             var meshNode = gameObject.sceneManager.AddMeshSceneNode(null, gameObject.CreatePyramidMesh());
             
             meshNode.RelativePosition = new Vector3(0.0f, 0.0f, -6.0f);
-            meshNode.SetBuffers();
 
             gameObject.Run(60.0);
         }

@@ -6,6 +6,7 @@ using OpenTK;
 using OpenTK.Graphics;
 using OpenTK.Graphics.OpenGL;
 using System;
+using System.Runtime.InteropServices;
 
 namespace Sigon.Lychgate.Graphics.Rendering
 {
@@ -15,16 +16,19 @@ namespace Sigon.Lychgate.Graphics.Rendering
     public static partial class Renderer
     {
         /// <summary>
-        /// Adds a <see cref="Vertex"/>Array to the OpenGL Subsystem
+        ///
         /// </summary>
         /// <param name="buffer">The Vertexarray to be passed</param>
         /// <returns>The Vertexbuffer Object</returns>
-        public static int AddVertexBuffer(ref Vertex[] buffer)
+        public static int AddVertexBuffer(Vector3[] buffer)
         {
+            if(buffer == null)
+                return 0;
+
             var vbo = GL.GenBuffer();
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(buffer.Length * Vertex.Stride), buffer, BufferUsageHint.StaticDraw);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(buffer.Length * Marshal.SizeOf(default(Vector3))), buffer, BufferUsageHint.StaticDraw);
             GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out int outval);
             if (outval == 0)
                 throw new Exception("No Buffer data passed to Indexbuffer");
@@ -33,11 +37,54 @@ namespace Sigon.Lychgate.Graphics.Rendering
         }
 
         /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer">The Vertexarray to be passed</param>
+        /// <returns>The Vertexbuffer Object</returns>
+        public static int AddNormalBuffer(Vector3[] buffer)
+        {
+            if(buffer == null)
+                return 0;
+                
+            var nbo = GL.GenBuffer();
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, nbo);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(buffer.Length * Marshal.SizeOf(default(Vector3))), buffer, BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out int outval);
+            if (outval == 0)
+                throw new Exception("No Buffer data passed to Indexbuffer");
+
+            return nbo;
+        }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="buffer">The Vertexarray to be passed</param>
+        /// <returns>The Vertexbuffer Object</returns>
+        public static int AddTexCoordBuffer(Vector2[] buffer)
+        {
+            if(buffer == null)
+                return 0;
+                
+            var tcbo = GL.GenBuffer();
+
+            GL.BindBuffer(BufferTarget.ArrayBuffer, tcbo);
+            GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(buffer.Length * Marshal.SizeOf(default(Vector2))), buffer, BufferUsageHint.StaticDraw);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out int outval);
+            if (outval == 0)
+                throw new Exception("No Buffer data passed to Indexbuffer");
+
+            return tcbo;
+        }
+
+
+        /// <summary>
         /// Sets the Indexbuffer
         /// </summary>
         /// <param name="data">The indices to be set</param>
         /// <returns></returns>
-        public static int AddIndexBuffer(ref ushort[] data)
+        public static int AddIndexBuffer(ushort[] data)
         {
             if (data == null)
                 throw new ArgumentNullException($"index data not found");
@@ -58,7 +105,7 @@ namespace Sigon.Lychgate.Graphics.Rendering
         /// </summary>
         /// <param name="data"></param>
         /// <returns></returns>
-        public static int AddColorBuffer(ref Color4[] data)
+        public static int AddColorBuffer(Color4[] data)
         {
             if (data == null)
                 throw new ArgumentNullException($"index data not found");
@@ -67,7 +114,7 @@ namespace Sigon.Lychgate.Graphics.Rendering
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, cbo);
             GL.BufferData(BufferTarget.ArrayBuffer, new IntPtr(data.Length * sizeof(int)*4), data, BufferUsageHint.DynamicDraw);
-            GL.GetBufferParameter(BufferTarget.ElementArrayBuffer, BufferParameterName.BufferSize, out int outval);
+            GL.GetBufferParameter(BufferTarget.ArrayBuffer, BufferParameterName.BufferSize, out int outval);
             if (outval == 0)
                 throw new Exception("No Buffer data passed to Indexbuffer");
             
@@ -79,10 +126,12 @@ namespace Sigon.Lychgate.Graphics.Rendering
         /// 
         /// </summary>
         /// <param name="vbo"></param>
+        /// <param name="nbo"></param>
+        /// <param name="tcbo"></param>
         /// <param name="ibo"></param>
         /// <param name="cbo"></param>
         /// <param name="count"></param>
-        public static void RenderVertexBuffer(int vbo, int ibo, int cbo, int count)
+        public static void RenderBuffers(int vbo, int nbo, int tcbo, int ibo, int cbo, int count)
         {
             GL.EnableClientState(ArrayCap.VertexArray);
             GL.EnableClientState(ArrayCap.NormalArray);
@@ -90,9 +139,11 @@ namespace Sigon.Lychgate.Graphics.Rendering
             GL.EnableClientState(ArrayCap.ColorArray);
 
             GL.BindBuffer(BufferTarget.ArrayBuffer, vbo);
-            GL.VertexPointer(3, VertexPointerType.Float, Vertex.Stride, new IntPtr(0));
-            GL.NormalPointer(NormalPointerType.Float, Vertex.Stride, new IntPtr(Vector3.SizeInBytes));
-            GL.TexCoordPointer(2, TexCoordPointerType.Float, Vertex.Stride, new IntPtr(2 * Vector3.SizeInBytes));
+            GL.VertexPointer(3, VertexPointerType.Float, Marshal.SizeOf(default(Vector3)), new IntPtr(0));
+            GL.BindBuffer(BufferTarget.ArrayBuffer, nbo);
+            GL.NormalPointer(NormalPointerType.Float, Marshal.SizeOf(default(Vector3)), new IntPtr(0));
+            GL.BindBuffer(BufferTarget.ArrayBuffer, tcbo);
+            GL.TexCoordPointer(2, TexCoordPointerType.Float, Marshal.SizeOf(default(Vector3)), new IntPtr(0));
             GL.BindBuffer(BufferTarget.ArrayBuffer, cbo);
             GL.ColorPointer(4, ColorPointerType.Float, 0, new IntPtr(0));
             GL.BindBuffer(BufferTarget.ElementArrayBuffer, ibo);

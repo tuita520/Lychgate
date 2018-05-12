@@ -26,7 +26,6 @@ namespace Sigon.Lychgate.Resources
             var outMesh = new Mesh();
             var stream = ResourcePool.GetResourceByName(name, ResourceType.Ascii);
             var buf = stream.ToString();
-            Vertex[] vertices;
             var positions = new List<Vector3>();
             var normals = new List<Vector3>();
             var texcoords = new List<Vector2>();
@@ -59,16 +58,9 @@ namespace Sigon.Lychgate.Resources
                 }
             }
 
-            vertices = new Vertex[positions.ToArray().Length];
-
-            for(int i = 0; i < vertices.Length; i++)
-            {
-                vertices[i].Position = positions.ToArray()[i];
-                vertices[i].Normal = normals.ToArray()[i];
-                vertices[i].TexCoords = texcoords.ToArray()[i];
-            }
-
-            vertices.CopyTo(outMesh.Vertices, 0);
+            positions.CopyTo(outMesh.Vertices, 0);
+            normals.CopyTo(outMesh.Normals, 0);
+            texcoords.CopyTo(outMesh.TexCoords, 0);
 
             return outMesh;
         }

@@ -24,6 +24,7 @@ namespace Sigon.Lychgate.Graphics
         public MeshSceneNode(Mesh mesh)
         {
             NodeMesh = mesh;
+            SetBuffers();
         }
 
         /// <summary>
@@ -31,9 +32,11 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public void SetBuffers()
         {
-            NodeMesh.VertexBufferId = Renderer.AddVertexBuffer(ref NodeMesh.Vertices);
-            NodeMesh.IndexBufferId = Renderer.AddIndexBuffer(ref NodeMesh.Indices);
-            NodeMesh.ColorBufferId = Renderer.AddColorBuffer(ref NodeMesh.Colors);
+            NodeMesh.VertexBufferId = Renderer.AddVertexBuffer(NodeMesh.Vertices);
+            NodeMesh.NormalBufferId = Renderer.AddNormalBuffer(NodeMesh.Normals);
+            NodeMesh.TexCoordBufferId = Renderer.AddTexCoordBuffer(NodeMesh.TexCoords);
+            NodeMesh.IndexBufferId = Renderer.AddIndexBuffer(NodeMesh.Indices);
+            NodeMesh.ColorBufferId = Renderer.AddColorBuffer(NodeMesh.Colors);
         }
 
         /// <summary>
@@ -42,7 +45,7 @@ namespace Sigon.Lychgate.Graphics
         public override void Draw()
         {
             Renderer.SetTransformation(AbsolutePosition);
-            Renderer.RenderVertexBuffer(NodeMesh.VertexBufferId, NodeMesh.IndexBufferId, NodeMesh.ColorBufferId, NodeMesh.Indices.Length);
+            Renderer.RenderBuffers(NodeMesh.VertexBufferId, NodeMesh.NormalBufferId, NodeMesh.TexCoordBufferId, NodeMesh.IndexBufferId, NodeMesh.ColorBufferId, NodeMesh.Indices.Length);
             base.Draw(); 
         }
     }
