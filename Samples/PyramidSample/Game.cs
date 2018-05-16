@@ -12,15 +12,9 @@ namespace Sigon.LychgateExample
 {
     public class Game : Engine
     {
-        /// <summary>
-        /// 
-        /// </summary>
-        public SceneManager sceneManager { get; set; }
-
-        public Game(int width, int height, bool fullscreen, string title)
+        private MeshSceneNode PyramidNode;
+        public Game(int width, int height, bool fullscreen, string title) : base()
         {
-            sceneManager = new SceneManager();
-
             CreateWindow(width, height, fullscreen, title);
 
             Window.KeyDown += OnKeyDown;
@@ -32,13 +26,13 @@ namespace Sigon.LychgateExample
                 Window.Close();
 
             if (e.Key == Key.Up)
-                sceneManager.RootNode.RelativeRotation.X -= 0.1f;
+                PyramidNode.RelativeRotation.X -= 0.1f;
             if (e.Key == Key.Down)
-                sceneManager.RootNode.RelativeRotation.X += 0.1f;
+                PyramidNode.RelativeRotation.X += 0.1f;
             if(e.Key == Key.Left)
-                sceneManager.RootNode.RelativeRotation.Y -= 0.1f;
+                PyramidNode.RelativeRotation.Y -= 0.1f;
             if(e.Key == Key.Right)
-                sceneManager.RootNode.RelativeRotation.Y += 0.1f;
+                PyramidNode.RelativeRotation.Y += 0.1f;
 
             if (e.Key == Key.F11)
                 if (Window.WindowState == WindowState.Normal)
@@ -49,15 +43,12 @@ namespace Sigon.LychgateExample
 
         protected override void OnUpdateFrame(object o, FrameEventArgs e)
         {
-            sceneManager.Update();
             base.OnUpdateFrame(o, e); // This has to be called AFTER our update.
         }
 
         protected override void OnRenderFrame(object o, FrameEventArgs e)
         {
-            Renderer.ClearScreen();
-            sceneManager.Draw();
-            base.OnRenderFrame(o, e); // This has to be called AFTER our update.
+            base.OnRenderFrame(o, e);
         }
 
         public Mesh CreatePyramidMesh()
@@ -90,9 +81,10 @@ namespace Sigon.LychgateExample
         {
             var gameObject = new Game(800, 600, false, "Lychgate Test");
 
-            var meshNode = gameObject.sceneManager.AddMeshSceneNode(null, gameObject.CreatePyramidMesh());
+            gameObject.PyramidNode = gameObject.SceneManager.AddMeshSceneNode(null, gameObject.CreatePyramidMesh());
+            gameObject.PyramidNode.AddAnimator(new FlyingCircleAnimator());
             
-            meshNode.RelativePosition = new Vector3(0.0f, 0.0f, -6.0f);
+            gameObject.PyramidNode.RelativePosition = new Vector3(0.0f, 0.0f, -6.0f);
 
             gameObject.Run(60.0);
         }

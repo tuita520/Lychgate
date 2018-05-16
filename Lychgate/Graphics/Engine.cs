@@ -16,12 +16,24 @@ namespace Sigon.Lychgate.Graphics
     /// </summary>
     public class Engine
     {
-        private SceneManager _sceneManager;
+        /// <summary>
+        ///
+        /// </summary>
+        public SceneManager SceneManager { get; set; }
 
         /// <summary>
         /// 
         /// </summary>
         public GameWindow Window { get; private set; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Engine()
+        {
+            SceneManager = new SceneManager();
+        }
+
 
         /// <summary>
         /// 
@@ -62,7 +74,7 @@ namespace Sigon.Lychgate.Graphics
         /// <param name="e"></param>
         protected virtual void OnRenderFrame(object o, FrameEventArgs e)
         {
-            // Drawing goes here
+            SceneManager.Draw();
             Window.SwapBuffers();
         }
 
@@ -73,7 +85,7 @@ namespace Sigon.Lychgate.Graphics
         /// <param name="e"></param>
         protected virtual void OnUpdateFrame(object o, FrameEventArgs e)
         {
-            // Scenegraph update goes here
+            SceneManager.Update();    
         }
 
         /// <summary>
@@ -86,7 +98,6 @@ namespace Sigon.Lychgate.Graphics
         public virtual void CreateWindow(int width, int height, bool fullscreen, string title)
         {
             Window = new GameWindow(width, height, GraphicsMode.Default, title, GameWindowFlags.Default, DisplayDevice.Default);
-            _sceneManager = new SceneManager();
  
             // Setting Event-Handlers
             Window.Resize += OnResize;

@@ -3,36 +3,29 @@
 // See AUTHORS and LICENSE for more Information
 
 using System.Runtime.CompilerServices;
+using Sigon.Lychgate.Graphics.Rendering;
 
 namespace Sigon.Lychgate.Graphics
 {
     /// <summary>
     /// Implements a Scene Graph and functionality to manipulate it.
     /// </summary>
-    public sealed class SceneManager
+    public sealed class SceneManager : SceneNode
     {
         /// <summary>
         /// 
         /// </summary>
-        public SceneNode RootNode { get; set; }
-
-        /// <summary>
-        /// 
-        /// </summary>
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Draw()
+        public SceneManager()
         {
-            RootNode.Draw();
+            PreRenderHook += OnPreRender;
         }
-
-
         /// <summary>
         /// 
         /// </summary>
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public void Update()
+        public void OnPreRender()
         {
-            RootNode.Update();
+            Renderer.ClearScreen();
         }
 
         /// <summary>
@@ -47,7 +40,7 @@ namespace Sigon.Lychgate.Graphics
             if (parent != null)
                 parent.AddChild(node);
             else
-                RootNode = node;
+                AddChild(node);
 
             return node;
         }

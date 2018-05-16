@@ -8,10 +8,23 @@ using System.Collections.Generic;
 
 namespace Sigon.Lychgate.Graphics
 {
+    /// <summary>
+    /// </summary>
+    public delegate void PreUpdateDelegate();
+    /// <summary>
+    /// </summary>
+    public delegate void PostUpdateDelegate();
+    /// <summary>
+    /// </summary>
+    public delegate void PreRenderDelegate();
+    /// <summary>
+    /// </summary>
+    public delegate void PostRenderDelegate();
+
     /// <inheritdoc />
     /// <summary>
     /// </summary>
-    public abstract class SceneNode : IDisposable
+    public abstract class SceneNode
     {
         private Matrix4 _relativeTransformation;
         private readonly List<SceneNode> _nodeList;
@@ -51,6 +64,19 @@ namespace Sigon.Lychgate.Graphics
         }
 
         /// <summary>
+        /// </summary>
+        public event PreUpdateDelegate PreUpdateHook;
+        /// <summary>
+        /// </summary>
+        public event PostUpdateDelegate PostUpdateHook;
+        /// <summary>
+        /// </summary>
+        public event PreRenderDelegate PreRenderHook;
+        /// <summary>
+        /// </summary>
+        public event PostRenderDelegate PostRenderHook;
+
+        /// <summary>
         /// 
         /// </summary>
         public SceneNode Parent { get; set; }
@@ -71,12 +97,14 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public virtual void Draw()
         {
-            
+            if(PreRenderHook != null)
+                PreRenderHook();
 
             foreach (var node in _nodeList)
                 node.Draw();
-
             
+            if(PostRenderHook != null)
+                PostRenderHook();
         }
 
         /// <summary>
@@ -87,9 +115,15 @@ namespace Sigon.Lychgate.Graphics
             foreach (var anim in _animatorList)
                 anim.Animate(this);
 
+            if(PreUpdateHook != null)
+                PreUpdateHook();
+
             // loop through the list and update the children
             foreach (var node in _nodeList)
                 node.Update();
+        
+            if(PostUpdateHook != null)
+                PostUpdateHook();
         }
 
         /// <summary>
@@ -97,10 +131,11 @@ namespace Sigon.Lychgate.Graphics
         /// </summary>
         public virtual void Destroy()
         {
-            foreach (var node in _nodeList)
-                node.Dispose();
+            for(var i = 0; i < _nodeList.Count; i++)
+                _nodeList[i] = null;
 
             _nodeList.Clear();
+
         }
 
         /// <summary>
@@ -119,14 +154,6 @@ namespace Sigon.Lychgate.Graphics
         public virtual void AddAnimator(SceneNodeAnimator anim)
         {
             _animatorList.Add(anim);
-        }
-
-        /// <inheritdoc />
-        /// <summary>
-        /// </summary>
-        public virtual void Dispose()
-        {
-
         }
         
         /// <summary>

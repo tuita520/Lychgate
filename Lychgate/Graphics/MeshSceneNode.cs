@@ -10,7 +10,7 @@ namespace Sigon.Lychgate.Graphics
     /// <summary>
     /// 
     /// </summary>
-    public class MeshSceneNode : SceneNode, IDisposable
+    public class MeshSceneNode : SceneNode
     {
         /// <summary>
         /// 
